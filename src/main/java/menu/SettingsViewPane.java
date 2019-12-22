@@ -4,21 +4,27 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import model.Settings;
 
 import java.util.function.UnaryOperator;
 
-public class SettingsViewPane extends HBox {
+public class SettingsViewPane extends VBox {
 
     MenuViewContract.Controller controller;
 
-    public SettingsViewPane() {
+    public SettingsViewPane(double prefWidth) {
+        setPrefWidth(prefWidth);
+
         TextField widthInput = new TextField();
         TextField heightInput = new TextField();
         TextField playerCountInput = new TextField();
-        Button saveSettingsButton = new Button("save");
+        Button saveSettingsButton = new Button("save settings");
         setAlignment(Pos.CENTER);
+
+        widthInput.setMaxWidth(prefWidth);
+        heightInput.setMaxWidth(prefWidth);
+        playerCountInput.setMaxWidth(prefWidth);
 
         UnaryOperator<TextFormatter.Change> filter = change -> change.getText().matches("[0-9]*") ? change : null;
 
