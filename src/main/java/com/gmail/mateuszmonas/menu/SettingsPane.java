@@ -1,6 +1,6 @@
 package com.gmail.mateuszmonas.menu;
 
-import com.gmail.mateuszmonas.model.Settings;
+import com.gmail.mateuszmonas.model.GameSettings;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -33,7 +33,7 @@ public class SettingsPane extends VBox {
         heightInput.setTextFormatter(new TextFormatter<>(filter));
         playerCountInput.setTextFormatter(new TextFormatter<>(filter));
 
-        saveSettingsButton.setOnMouseClicked(mouseEvent -> controller.changeSettings(new Settings(
+        saveSettingsButton.setOnMouseClicked(mouseEvent -> controller.changeSettings(new GameSettings(
                 Integer.parseInt(widthInput.getText()),
                 Integer.parseInt(heightInput.getText()),
                 Integer.parseInt(playerCountInput.getText()))

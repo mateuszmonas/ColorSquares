@@ -1,5 +1,6 @@
-package com.gmail.mateuszmonas.game;
+package com.gmail.mateuszmonas.game.view;
 
+import com.gmail.mateuszmonas.game.GameContract;
 import javafx.scene.layout.GridPane;
 
 public class BoardPane extends GridPane {

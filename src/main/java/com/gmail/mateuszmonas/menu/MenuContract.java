@@ -3,7 +3,7 @@ package com.gmail.mateuszmonas.menu;
 
 import com.gmail.mateuszmonas.BaseController;
 import com.gmail.mateuszmonas.BaseView;
-import com.gmail.mateuszmonas.model.Settings;
+import com.gmail.mateuszmonas.model.GameSettings;
 
 public interface MenuContract {
 
@@ -13,7 +13,7 @@ public interface MenuContract {
 
         void startGame();
 
-        void changeSettings(Settings settings);
+        void changeSettings(GameSettings gameSettings);
     }
 
     interface View extends BaseView<Controller> {

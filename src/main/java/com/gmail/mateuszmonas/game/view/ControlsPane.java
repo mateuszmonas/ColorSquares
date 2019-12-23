@@ -1,5 +1,6 @@
-package com.gmail.mateuszmonas.game;
+package com.gmail.mateuszmonas.game.view;
 
+import com.gmail.mateuszmonas.game.GameContract;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -27,8 +28,8 @@ public class ControlsPane extends HBox {
         getChildren().addAll(backButton, startButton, score, maxScore);
     }
 
-    public void updateStartButton(boolean gameRunning) {
-        startButton.setText(gameRunning ? "stop" : "start");
+    public void updatePauseButton(boolean isPaused) {
+        startButton.setText(isPaused ? "start" : "stop");
     }
 
     public void setController(GameContract.Controller controller) {

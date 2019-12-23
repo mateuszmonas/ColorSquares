@@ -1,4 +1,4 @@
-package com.gmail.mateuszmonas.game;
+package com.gmail.mateuszmonas.game.view;
 
 import javafx.scene.control.Button;
 

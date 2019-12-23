@@ -1,5 +1,7 @@
-package com.gmail.mateuszmonas.game;
+package com.gmail.mateuszmonas.game.view;
 
+import com.gmail.mateuszmonas.game.GameContract;
+import com.gmail.mateuszmonas.model.GameState;
 import javafx.scene.layout.VBox;
 
 
@@ -26,8 +28,8 @@ public class GamePane extends VBox implements GameContract.View {
     }
 
     @Override
-    public void updateStartButton(boolean gameRunning) {
-        controlsPane.updateStartButton(gameRunning);
+    public void updatePauseButton(boolean gameRunning) {
+        controlsPane.updatePauseButton(gameRunning);
     }
 
     @Override

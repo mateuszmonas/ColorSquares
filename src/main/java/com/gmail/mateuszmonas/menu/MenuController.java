@@ -1,8 +1,8 @@
 package com.gmail.mateuszmonas.menu;
 
 import com.gmail.mateuszmonas.game.GameController;
-import com.gmail.mateuszmonas.game.GamePane;
-import com.gmail.mateuszmonas.model.Settings;
+import com.gmail.mateuszmonas.game.view.GamePane;
+import com.gmail.mateuszmonas.model.GameSettings;
 import com.gmail.mateuszmonas.util.GuiUtil;
 
 public class MenuController implements MenuContract.Controller {
@@ -25,7 +25,7 @@ public class MenuController implements MenuContract.Controller {
     }
 
     @Override
-    public void changeSettings(Settings settings) {
+    public void changeSettings(GameSettings gameSettings) {
 
     }
 
