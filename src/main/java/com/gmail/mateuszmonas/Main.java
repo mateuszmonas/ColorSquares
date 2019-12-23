@@ -1,10 +1,10 @@
 package com.gmail.mateuszmonas;
 
+import com.gmail.mateuszmonas.menu.MenuController;
+import com.gmail.mateuszmonas.menu.MenuPane;
 import javafx.application.Application;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import com.gmail.mateuszmonas.menu.MenuController;
-import com.gmail.mateuszmonas.menu.MenuPane;
 
 public class Main extends Application {
 

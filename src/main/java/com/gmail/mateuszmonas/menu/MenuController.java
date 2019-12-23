@@ -1,11 +1,9 @@
 package com.gmail.mateuszmonas.menu;
 
-import com.gmail.mateuszmonas.Main;
 import com.gmail.mateuszmonas.game.GameController;
 import com.gmail.mateuszmonas.game.GamePane;
 import com.gmail.mateuszmonas.model.Settings;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import com.gmail.mateuszmonas.util.GuiUtil;
 
 public class MenuController implements MenuContract.Controller {
 
@@ -23,7 +21,7 @@ public class MenuController implements MenuContract.Controller {
 
     @Override
     public void startGame() {
-        new GameController(new GamePane(Main.getPrimaryStage().getWidth(), Main.getPrimaryStage().getHeight())).start();
+        new GameController(new GamePane(GuiUtil.getWidth(), GuiUtil.getHeight())).start();
     }
 
     @Override
@@ -33,6 +31,6 @@ public class MenuController implements MenuContract.Controller {
 
     @Override
     public void start() {
-        Main.getPrimaryStage().setScene(new Scene((Parent) view));
+        GuiUtil.changeScene(view);
     }
 }

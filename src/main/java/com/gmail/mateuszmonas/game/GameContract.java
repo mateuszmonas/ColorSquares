@@ -1,8 +1,11 @@
 package com.gmail.mateuszmonas.game;
 
+import com.gmail.mateuszmonas.BaseController;
+import com.gmail.mateuszmonas.BaseView;
+
 public interface GameContract {
 
-    interface Controller {
+    interface Controller extends BaseController {
 
         void choosePosition(int x, int y);
 
@@ -10,12 +13,9 @@ public interface GameContract {
 
         void exitGame();
 
-        void start();
-
     }
 
-    interface View {
-        void setController(GameContract.Controller controller);
+    interface View extends BaseView<Controller> {
 
         void updateGameState(GameState gameState);
 
