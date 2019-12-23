@@ -1,19 +1,21 @@
 package game;
 
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import menu.MenuContract;
 
+
 public class GamePane extends VBox implements GameContract.View {
 
-    MenuContract.Controller controller;
+    GameContract.Controller controller;
 
     public GamePane(double prefWidth, double prefHeight) {
-        setPrefWidth(prefHeight);
+        setPrefWidth(prefWidth);
         setPrefHeight(prefHeight);
     }
 
     @Override
-    public void setController(MenuContract.Controller controller) {
+    public void setController(GameContract.Controller controller) {
         this.controller = controller;
     }
 

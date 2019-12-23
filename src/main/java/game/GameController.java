@@ -10,6 +10,7 @@ public class GameController implements GameContract.Controller {
 
     public GameController(GameContract.View view) {
         this.view = view;
+        view.setController(this);
     }
 
     @Override

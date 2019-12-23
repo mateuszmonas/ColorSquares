@@ -16,7 +16,7 @@ public interface MenuContract {
     }
 
     interface View {
-        void setController(Controller controller);
+        void setController(MenuContract.Controller controller);
     }
 
 }

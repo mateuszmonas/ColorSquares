@@ -1,5 +1,7 @@
 package menu;
 
+import game.GameController;
+import game.GamePane;
 import gui.Gui;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,6 +13,7 @@ public class MenuController implements MenuContract.Controller {
 
     public MenuController(MenuContract.View view) {
         this.view = view;
+        view.setController(this);
     }
 
     @Override
@@ -20,7 +23,7 @@ public class MenuController implements MenuContract.Controller {
 
     @Override
     public void startGame() {
-
+        new GameController(new GamePane(Gui.getInstance().getPrimaryStage().getWidth(), Gui.getInstance().getPrimaryStage().getHeight())).start();
     }
 
     @Override

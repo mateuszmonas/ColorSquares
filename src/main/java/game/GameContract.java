@@ -17,7 +17,7 @@ public class GameContract {
     }
 
     interface View {
-        void setController(MenuContract.Controller controller);
+        void setController(GameContract.Controller controller);
 
         void updateGameState(GameState gameState);
     }
