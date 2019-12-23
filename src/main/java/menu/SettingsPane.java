@@ -13,8 +13,9 @@ public class SettingsPane extends VBox {
 
     MenuContract.Controller controller;
 
-    public SettingsPane(double prefWidth) {
+    public SettingsPane(double prefWidth, double prefHeight) {
         setPrefWidth(prefWidth);
+        setPrefHeight(prefHeight);
 
         TextField widthInput = new TextField();
         TextField heightInput = new TextField();

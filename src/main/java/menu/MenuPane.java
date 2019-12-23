@@ -14,7 +14,7 @@ public class MenuPane extends VBox implements MenuContract.View {
         setPrefHeight(prefHeight);
         setAlignment(Pos.CENTER);
 
-        settingsPane = new SettingsPane(prefWidth / 10);
+        settingsPane = new SettingsPane(prefWidth / 10, prefHeight / 10);
 
         Button startButton = new Button("start");
         Button exitButton = new Button("exit");
