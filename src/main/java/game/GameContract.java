@@ -1,7 +1,5 @@
 package game;
 
-import menu.MenuContract;
-
 public class GameContract {
 
     interface Controller {

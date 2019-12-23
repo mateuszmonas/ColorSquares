@@ -1,8 +1,6 @@
 package game;
 
-import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import menu.MenuContract;
 
 
 public class GamePane extends VBox implements GameContract.View {

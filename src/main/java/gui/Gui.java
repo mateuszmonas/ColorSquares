@@ -1,17 +1,11 @@
 package gui;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-import menu.MenuController;
-import menu.MenuPane;
 
 public class Gui {
 
-    private Stage primaryStage;
-
     private static Gui instance;
+    private Stage primaryStage;
 
     private Gui() {
     }

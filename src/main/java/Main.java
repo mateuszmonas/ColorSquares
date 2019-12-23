@@ -1,20 +1,21 @@
 import gui.Gui;
 import javafx.application.Application;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import menu.MenuController;
 import menu.MenuPane;
 
-public class Main extends Application{
+public class Main extends Application {
+
+    private static Stage primaryStage;
 
     public static void main(String[] args) {
         launch(args);
     }
 
-
-    private static Stage primaryStage;
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
 
     @Override
     public void start(Stage stage) {
@@ -33,11 +34,6 @@ public class Main extends Application{
         menuController.start();
         stage.show();
     }
-
-    public static Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
 
 
 }

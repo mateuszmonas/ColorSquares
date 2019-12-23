@@ -11,6 +11,5 @@ public class GameBoardPane extends GridPane {
         setPrefHeight(prefHeight);
 
 
-
     }
 }
