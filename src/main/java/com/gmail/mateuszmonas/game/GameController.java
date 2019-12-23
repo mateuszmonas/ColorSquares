@@ -1,6 +1,6 @@
-package game;
+package com.gmail.mateuszmonas.game;
 
-import gui.Gui;
+import com.gmail.mateuszmonas.Main;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
@@ -30,6 +30,6 @@ public class GameController implements GameContract.Controller {
 
     @Override
     public void start() {
-        Gui.getInstance().getPrimaryStage().setScene(new Scene((Parent) view));
+        Main.getPrimaryStage().setScene(new Scene((Parent) view));
     }
 }

@@ -1,4 +1,4 @@
-package model;
+package com.gmail.mateuszmonas.model;
 
 public class Settings {
 
@@ -12,3 +12,4 @@ public class Settings {
         this.playerCount = playerCount;
     }
 }
+

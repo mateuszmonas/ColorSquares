@@ -1,11 +1,11 @@
-package menu;
+package com.gmail.mateuszmonas.menu;
 
+import com.gmail.mateuszmonas.model.Settings;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.VBox;
-import model.Settings;
 
 import java.util.function.UnaryOperator;
 

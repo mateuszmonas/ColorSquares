@@ -1,4 +1,4 @@
-package game;
+package com.gmail.mateuszmonas.game;
 
 public class GameContract {
 

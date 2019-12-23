@@ -1,4 +1,4 @@
-package menu;
+package com.gmail.mateuszmonas.menu;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

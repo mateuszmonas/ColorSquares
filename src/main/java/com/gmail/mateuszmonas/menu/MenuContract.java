@@ -1,6 +1,7 @@
-package menu;
+package com.gmail.mateuszmonas.menu;
 
-import model.Settings;
+
+import com.gmail.mateuszmonas.model.Settings;
 
 public interface MenuContract {
 
