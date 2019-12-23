@@ -1,6 +1,6 @@
 package game;
 
-public class Game implements GameViewContract.Controller {
+public class GameController implements GameContract.Controller {
 
     @Override
     public void choosePosition(int x, int y) {

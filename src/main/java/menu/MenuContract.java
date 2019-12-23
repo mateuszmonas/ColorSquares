@@ -2,7 +2,7 @@ package menu;
 
 import model.Settings;
 
-public interface MenuViewContract {
+public interface MenuContract {
 
     interface Controller {
 

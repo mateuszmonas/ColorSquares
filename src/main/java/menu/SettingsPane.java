@@ -9,11 +9,11 @@ import model.Settings;
 
 import java.util.function.UnaryOperator;
 
-public class SettingsViewPane extends VBox {
+public class SettingsPane extends VBox {
 
-    MenuViewContract.Controller controller;
+    MenuContract.Controller controller;
 
-    public SettingsViewPane(double prefWidth) {
+    public SettingsPane(double prefWidth) {
         setPrefWidth(prefWidth);
 
         TextField widthInput = new TextField();
@@ -42,7 +42,7 @@ public class SettingsViewPane extends VBox {
 
     }
 
-    public void setController(MenuViewContract.Controller controller) {
+    public void setController(MenuContract.Controller controller) {
         this.controller = controller;
     }
 }

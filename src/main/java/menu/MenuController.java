@@ -2,11 +2,11 @@ package menu;
 
 import model.Settings;
 
-public class MenuViewController implements MenuViewContract.Controller {
+public class MenuController implements MenuContract.Controller {
 
-    final MenuViewContract.View view;
+    final MenuContract.View view;
 
-    public MenuViewController(MenuViewContract.View view) {
+    public MenuController(MenuContract.View view) {
         this.view = view;
     }
 

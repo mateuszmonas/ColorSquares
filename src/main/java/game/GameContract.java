@@ -1,9 +1,8 @@
 package game;
 
-import menu.MenuViewContract;
-import model.Settings;
+import menu.MenuContract;
 
-public class GameViewContract {
+public class GameContract {
 
     interface Controller {
 
@@ -16,7 +15,7 @@ public class GameViewContract {
     }
 
     interface View {
-        void setController(MenuViewContract.Controller controller);
+        void setController(MenuContract.Controller controller);
 
         void updateGameState(GameState gameState);
     }

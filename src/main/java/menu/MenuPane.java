@@ -4,17 +4,17 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
-public class MenuViewPane extends VBox implements MenuViewContract.View {
+public class MenuPane extends VBox implements MenuContract.View {
 
-    MenuViewContract.Controller controller;
-    SettingsViewPane settingsViewPane;
+    MenuContract.Controller controller;
+    SettingsPane settingsPane;
 
-    public MenuViewPane(double prefWidth, double prefHeight) {
+    public MenuPane(double prefWidth, double prefHeight) {
         setPrefWidth(prefWidth);
         setPrefHeight(prefHeight);
         setAlignment(Pos.CENTER);
 
-        settingsViewPane = new SettingsViewPane(prefWidth / 10);
+        settingsPane = new SettingsPane(prefWidth / 10);
 
         Button startButton = new Button("start");
         Button exitButton = new Button("exit");
@@ -23,12 +23,12 @@ public class MenuViewPane extends VBox implements MenuViewContract.View {
         exitButton.setOnMouseClicked(mouseEvent -> controller.exitApplication());
 
 
-        getChildren().addAll(settingsViewPane, startButton, exitButton);
+        getChildren().addAll(settingsPane, startButton, exitButton);
     }
 
     @Override
-    public void setController(MenuViewContract.Controller controller) {
+    public void setController(MenuContract.Controller controller) {
         this.controller = controller;
-        settingsViewPane.setController(controller);
+        settingsPane.setController(controller);
     }
 }
