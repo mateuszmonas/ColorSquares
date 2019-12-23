@@ -1,5 +1,8 @@
 package menu;
 
+import gui.Gui;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import model.Settings;
 
 public class MenuController implements MenuContract.Controller {
@@ -25,4 +28,8 @@ public class MenuController implements MenuContract.Controller {
 
     }
 
+    @Override
+    public void start() {
+        Gui.getInstance().getPrimaryStage().setScene(new Scene((Parent) view));
+    }
 }

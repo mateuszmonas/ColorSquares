@@ -12,6 +12,8 @@ public class GameContract {
 
         void pauseGame();
 
+        void start();
+
     }
 
     interface View {

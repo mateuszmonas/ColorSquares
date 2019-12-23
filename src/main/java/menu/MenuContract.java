@@ -12,6 +12,7 @@ public interface MenuContract {
 
         void changeSettings(Settings settings);
 
+        void start();
     }
 
     interface View {
