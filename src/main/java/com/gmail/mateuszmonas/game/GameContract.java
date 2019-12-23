@@ -1,6 +1,6 @@
 package com.gmail.mateuszmonas.game;
 
-public class GameContract {
+public interface GameContract {
 
     interface Controller {
 
@@ -8,7 +8,7 @@ public class GameContract {
 
         void startGame();
 
-        void pauseGame();
+        void exitGame();
 
         void start();
 
@@ -18,6 +18,8 @@ public class GameContract {
         void setController(GameContract.Controller controller);
 
         void updateGameState(GameState gameState);
+
+        void updateStartButton(boolean gameRunning);
     }
 
 
