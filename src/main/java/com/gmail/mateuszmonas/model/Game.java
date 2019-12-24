@@ -49,6 +49,11 @@ public class Game {
         gameState.selectStartingPosition(x, y);
     }
 
+    public void restartGame() {
+        paused = true;
+        gameState.restart();
+    }
+
     public void setObserver(GameObserver observer) {
         gameState.setObserver(observer);
     }

@@ -50,4 +50,10 @@ public class GameController implements GameContract.Controller, GameObserver {
         game.start();
         GuiUtil.changeScene(view);
     }
+
+    @Override
+    public void gameFinished() {
+        view.updatePauseButton(false);
+        game.restartGame();
+    }
 }

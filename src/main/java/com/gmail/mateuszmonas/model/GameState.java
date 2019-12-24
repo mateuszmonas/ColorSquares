@@ -76,6 +76,18 @@ public class GameState {
         }
     }
 
+    void restart() {
+        unoccupiedFields = Arrays.stream(board)
+                .flatMap(Arrays::stream)
+                .filter(field -> field.color != BLOCKED)
+                .collect(Collectors.toSet());
+        unoccupiedFields.forEach(field -> field.color = EMPTY);
+        for (Player player : players) {
+            player.setStartingField(player.startingField);
+        }
+        observer.update(boardToArray());
+    }
+
     void growFields(Set<Field> fields) {
         int color = fields.stream()
                 .mapToInt(field -> field.color)
@@ -92,10 +104,14 @@ public class GameState {
     }
 
     public void update() {
+        if (unoccupiedFields.isEmpty()) return;
         List<Player> randomOrder = new ArrayList<>(players);
         Collections.shuffle(randomOrder);
         randomOrder.forEach(player -> growFields(player.fields));
         observer.update(boardToArray());
+        if (unoccupiedFields.isEmpty()) {
+            observer.gameFinished();
+        }
     }
 
     int[][] boardToArray() {
@@ -139,7 +155,6 @@ public class GameState {
 
     private static class Player {
         int color;
-        int fieldCount = 0;
         Field startingField;
         Set<Field> fields = new HashSet<>();
 
