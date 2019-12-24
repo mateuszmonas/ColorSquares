@@ -18,8 +18,10 @@ public class GameState {
     public GameState(GameSettings gameSettings) {
         this.gameSettings = gameSettings;
         generateGrid(gameSettings.getWidth(), gameSettings.getHeight());
+        humanPlayer = new Player(1);
+        players.add(humanPlayer);
         for (int i = 0; i < gameSettings.getBotCount(); i++) {
-            Player player = new Player(i + 1);
+            Player player = new Player(i + 2);
             getRandomUnoccupiedField().ifPresent(player::setStartingField);
             players.add(player);
         }
@@ -67,6 +69,13 @@ public class GameState {
         }
     }
 
+    void selectStartingPosition(int x, int y) {
+        if (unoccupiedFields.contains(board[x][y])) {
+            humanPlayer.setStartingField(board[x][y]);
+            observer.update(boardToArray());
+        }
+    }
+
     void growFields(Set<Field> fields) {
         int color = fields.stream()
                 .mapToInt(field -> field.color)
@@ -86,21 +95,21 @@ public class GameState {
         List<Player> randomOrder = new ArrayList<>(players);
         Collections.shuffle(randomOrder);
         randomOrder.forEach(player -> growFields(player.fields));
-        observer.update(Arrays.stream(board)
+        observer.update(boardToArray());
+    }
+
+    int[][] boardToArray() {
+        return Arrays.stream(board)
                 .map(fields -> Arrays.stream(fields)
                         .mapToInt(field -> field.color)
                         .toArray())
-                .toArray(int[][]::new));
+                .toArray(int[][]::new);
     }
 
     public void setObserver(GameObserver observer) {
         this.observer = observer;
         observer.initialize(gameSettings.getWidth(), gameSettings.getHeight());
-        observer.update(Arrays.stream(board)
-                .map(fields -> Arrays.stream(fields)
-                        .mapToInt(field -> field.color)
-                        .toArray())
-                .toArray(int[][]::new));
+        observer.update(boardToArray());
     }
 
     private static class Field {
@@ -131,6 +140,7 @@ public class GameState {
     private static class Player {
         int color;
         int fieldCount = 0;
+        Field startingField;
         Set<Field> fields = new HashSet<>();
 
         public Player(int color) {
@@ -138,6 +148,11 @@ public class GameState {
         }
 
         void setStartingField(Field field) {
+            if (startingField != null) {
+                fields.clear();
+                startingField.color = 0;
+            }
+            startingField = field;
             fields.add(field);
             field.color = color;
         }

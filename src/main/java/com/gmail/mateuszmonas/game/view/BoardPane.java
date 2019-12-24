@@ -19,7 +19,10 @@ public class BoardPane extends GridPane {
         boardFields = new BoardField[boardWidth][boardHeight];
         for (int i = 0; i < boardFields.length; i++) {
             for (int j = 0; j < boardFields[i].length; j++) {
+                int x = i;
+                int y = j;
                 boardFields[i][j] = new BoardField(getPrefWidth() / boardWidth, getPrefHeight() / boardHeight);
+                boardFields[i][j].setOnMouseClicked(mouseEvent -> controller.choosePosition(x, y));
                 add(boardFields[i][j], i + 1, j + 1);
             }
         }

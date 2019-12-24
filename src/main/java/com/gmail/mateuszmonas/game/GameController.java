@@ -20,7 +20,7 @@ public class GameController implements GameContract.Controller, GameObserver {
 
     @Override
     public void choosePosition(int x, int y) {
-
+        game.selectStartingPosition(x, y);
     }
 
     @Override

@@ -45,6 +45,10 @@ public class Game {
         running = false;
     }
 
+    public void selectStartingPosition(int x, int y) {
+        gameState.selectStartingPosition(x, y);
+    }
+
     public void setObserver(GameObserver observer) {
         gameState.setObserver(observer);
     }
