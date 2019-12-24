@@ -17,6 +17,9 @@ public interface MenuContract {
     }
 
     interface View extends BaseView<Controller> {
+
+        void updateSettings(GameSettings gameSettings);
+
     }
 
 }

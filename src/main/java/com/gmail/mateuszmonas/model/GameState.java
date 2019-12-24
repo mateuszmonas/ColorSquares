@@ -15,7 +15,7 @@ public class GameState {
     }
 
     public void update() {
-
+        System.out.println("debug");
     }
 
     private static class Player {

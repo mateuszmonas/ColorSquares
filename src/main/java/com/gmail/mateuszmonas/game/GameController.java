@@ -2,35 +2,21 @@ package com.gmail.mateuszmonas.game;
 
 import com.gmail.mateuszmonas.menu.MenuController;
 import com.gmail.mateuszmonas.menu.MenuPane;
+import com.gmail.mateuszmonas.model.Game;
 import com.gmail.mateuszmonas.model.GameObserver;
 import com.gmail.mateuszmonas.model.GameState;
 import com.gmail.mateuszmonas.util.GuiUtil;
-import javafx.application.Platform;
 
 public class GameController implements GameContract.Controller, GameObserver {
 
     GameContract.View view;
-    private boolean gameRunning = true;
-    private boolean isPaused = true;
-    private GameState gameState;
+    Game game;
 
-    public GameController(GameContract.View view) {
+    public GameController(GameContract.View view, Game game) {
         this.view = view;
+        this.game = game;
         view.setController(this);
-        Thread gameThread = new Thread(() -> {
-            Runnable runnable = gameState::update;
-            while (gameRunning) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ignore) {
-                }
-                if (!isPaused) {
-                    Platform.runLater(runnable);
-                }
-            }
-        });
-        gameThread.setDaemon(true);
-        gameThread.start();
+        game.addObserver(this);
     }
 
     @Override
@@ -40,8 +26,8 @@ public class GameController implements GameContract.Controller, GameObserver {
 
     @Override
     public void startGame() {
-        isPaused = !isPaused;
-        view.updatePauseButton(isPaused);
+        game.changePausedState();
+        view.updatePauseButton(game.isPaused());
     }
 
     @Override
@@ -51,12 +37,13 @@ public class GameController implements GameContract.Controller, GameObserver {
 
     @Override
     public void exitGame() {
-        gameRunning = false;
+        game.stop();
         new MenuController(new MenuPane(GuiUtil.getWidth(), GuiUtil.getHeight())).start();
     }
 
     @Override
     public void start() {
+        game.start();
         GuiUtil.changeScene(view);
     }
 }

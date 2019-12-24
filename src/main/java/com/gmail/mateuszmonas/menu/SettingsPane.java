@@ -13,14 +13,19 @@ public class SettingsPane extends VBox {
 
     MenuContract.Controller controller;
 
+    TextField widthInput;
+    TextField heightInput;
+    TextField playerCountInput;
+    Button saveSettingsButton;
+
     public SettingsPane(double prefWidth, double prefHeight) {
         setPrefWidth(prefWidth);
         setPrefHeight(prefHeight);
 
-        TextField widthInput = new TextField();
-        TextField heightInput = new TextField();
-        TextField playerCountInput = new TextField();
-        Button saveSettingsButton = new Button("save settings");
+        widthInput = new TextField();
+        heightInput = new TextField();
+        playerCountInput = new TextField();
+        saveSettingsButton = new Button("save settings");
         setAlignment(Pos.CENTER);
 
         widthInput.setMaxWidth(prefWidth);
@@ -41,6 +46,12 @@ public class SettingsPane extends VBox {
 
         getChildren().addAll(widthInput, heightInput, playerCountInput, saveSettingsButton);
 
+    }
+
+    public void updateSettings(GameSettings gameSettings) {
+        widthInput.setText(String.valueOf(gameSettings.getWidth()));
+        heightInput.setText(String.valueOf(gameSettings.getHeight()));
+        playerCountInput.setText(String.valueOf(gameSettings.getPlayerCount()));
     }
 
     public void setController(MenuContract.Controller controller) {

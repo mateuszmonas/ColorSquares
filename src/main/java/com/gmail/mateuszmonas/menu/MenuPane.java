@@ -1,5 +1,6 @@
 package com.gmail.mateuszmonas.menu;
 
+import com.gmail.mateuszmonas.model.GameSettings;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -24,6 +25,11 @@ public class MenuPane extends VBox implements MenuContract.View {
 
 
         getChildren().addAll(settingsPane, startButton, exitButton);
+    }
+
+    @Override
+    public void updateSettings(GameSettings gameSettings) {
+        settingsPane.updateSettings(gameSettings);
     }
 
     @Override
