@@ -5,14 +5,16 @@ public class GameSettings {
     private int width = 10;
     private int height = 10;
     private int botCount = 2;
+    private int obstructionsCount = 10;
 
     public GameSettings() {
     }
 
-    public GameSettings(int width, int height, int botCount) {
+    public GameSettings(int width, int height, int botCount, int obstructionsCount) {
         this.width = width;
         this.height = height;
         this.botCount = botCount;
+        this.obstructionsCount = obstructionsCount;
     }
 
     public int getWidth() {
@@ -25,6 +27,10 @@ public class GameSettings {
 
     public int getBotCount() {
         return botCount;
+    }
+
+    public int getObstructionsCount() {
+        return obstructionsCount;
     }
 }
 

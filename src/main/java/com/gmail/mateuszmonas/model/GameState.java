@@ -23,6 +23,12 @@ public class GameState {
             getRandomUnoccupiedField().ifPresent(player::setStartingField);
             players.add(player);
         }
+        for (int i = 0; i < gameSettings.getObstructionsCount(); i++) {
+            getRandomUnoccupiedField().ifPresent(field -> {
+                field.color = BLOCKED;
+                unoccupiedFields.remove(field);
+            });
+        }
     }
 
     Optional<Field> getRandomUnoccupiedField() {
