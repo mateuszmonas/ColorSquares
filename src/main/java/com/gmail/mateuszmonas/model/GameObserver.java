@@ -6,6 +6,6 @@ public interface GameObserver {
 
     void update(int[][] boardState);
 
-    void gameFinished();
+    void gameFinished(int playerScore, boolean playerWin);
 
 }

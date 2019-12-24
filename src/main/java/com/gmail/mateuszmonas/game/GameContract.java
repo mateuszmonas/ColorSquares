@@ -13,6 +13,7 @@ public interface GameContract {
 
         void exitGame();
 
+        void restartGame();
     }
 
     interface View extends BaseView<Controller> {
@@ -22,6 +23,9 @@ public interface GameContract {
         void updateBoardState(int[][] boardState);
 
         void updatePauseButton(boolean gameRunning);
+
+        void showGameFinishedDialog(int playerScore, boolean playerWin);
+
     }
 
 

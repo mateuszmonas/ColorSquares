@@ -1,7 +1,11 @@
 package com.gmail.mateuszmonas.game.view;
 
 import com.gmail.mateuszmonas.game.GameContract;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.VBox;
+
+import java.util.Optional;
 
 
 public class GamePane extends VBox implements GameContract.View {
@@ -39,5 +43,20 @@ public class GamePane extends VBox implements GameContract.View {
     @Override
     public void updateBoardState(int[][] boardState) {
         boardPane.updateBoardState(boardState);
+    }
+
+    @Override
+    public void showGameFinishedDialog(int playerScore, boolean playerWin) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Game is finished");
+        alert.setHeaderText("You " + (playerWin ? "won" : "lost") + ", your score is: " + playerScore);
+        alert.setContentText("Would you like to play again?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        result.ifPresent(e -> {
+            if (e == ButtonType.OK) {
+                controller.restartGame();
+            }
+        });
     }
 }

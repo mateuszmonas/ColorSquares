@@ -110,7 +110,12 @@ public class GameState {
         randomOrder.forEach(player -> growFields(player.fields));
         observer.update(boardToArray());
         if (unoccupiedFields.isEmpty()) {
-            observer.gameFinished();
+            observer.gameFinished(humanPlayer.fields.size(),
+                    players.stream()
+                            .mapToInt(player -> player.fields.size())
+                            .max()
+                            .orElse(humanPlayer.fields.size()) == humanPlayer.fields.size()
+            );
         }
     }
 

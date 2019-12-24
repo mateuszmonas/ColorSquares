@@ -52,8 +52,14 @@ public class GameController implements GameContract.Controller, GameObserver {
     }
 
     @Override
-    public void gameFinished() {
-        view.updatePauseButton(false);
+    public void gameFinished(int playerScore, boolean playerWin) {
+        game.changePausedState();
+        view.updatePauseButton(game.isPaused());
+        view.showGameFinishedDialog(playerScore, playerWin);
+    }
+
+    @Override
+    public void restartGame() {
         game.restartGame();
     }
 }
