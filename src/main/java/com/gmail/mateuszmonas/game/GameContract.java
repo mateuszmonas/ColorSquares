@@ -2,7 +2,6 @@ package com.gmail.mateuszmonas.game;
 
 import com.gmail.mateuszmonas.BaseController;
 import com.gmail.mateuszmonas.BaseView;
-import com.gmail.mateuszmonas.model.GameState;
 
 public interface GameContract {
 

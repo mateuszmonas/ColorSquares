@@ -1,7 +1,6 @@
 package com.gmail.mateuszmonas.game.view;
 
 import com.gmail.mateuszmonas.game.GameContract;
-import com.gmail.mateuszmonas.model.GameState;
 import javafx.scene.layout.VBox;
 
 

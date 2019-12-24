@@ -4,11 +4,11 @@ import java.util.HashSet;
 
 public class GameState {
 
-    private int board[][];
+    int x = 0;
+    private int[][] board;
     private GameSettings gameSettings;
     private HashSet<Player> players;
     private GameObserver observer;
-    int x = 0;
 
     public GameState(GameSettings gameSettings) {
         this.gameSettings = gameSettings;

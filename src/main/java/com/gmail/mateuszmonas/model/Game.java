@@ -2,15 +2,12 @@ package com.gmail.mateuszmonas.model;
 
 import javafx.application.Platform;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class Game {
 
+    GameState gameState;
     private boolean running = false;
     private boolean paused = true;
     private Thread gameThread;
-    GameState gameState;
 
     public Game(GameSettings gameSettings) {
         gameState = new GameState(gameSettings);
