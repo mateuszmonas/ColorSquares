@@ -7,15 +7,21 @@ public class GameState {
     private int board[][];
     private GameSettings gameSettings;
     private HashSet<Player> players;
-
+    private GameObserver observer;
+    int x = 0;
 
     public GameState(GameSettings gameSettings) {
         this.gameSettings = gameSettings;
-
+        board = new int[gameSettings.getWidth()][gameSettings.getHeight()];
     }
 
     public void update() {
-        System.out.println("debug");
+        observer.update(board);
+    }
+
+    public void setObserver(GameObserver observer) {
+        this.observer = observer;
+        observer.initialize(gameSettings.getWidth(), gameSettings.getHeight());
     }
 
     private static class Player {

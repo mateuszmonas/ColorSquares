@@ -21,6 +21,11 @@ public class GamePane extends VBox implements GameContract.View {
     }
 
     @Override
+    public void initialize(int boardWidth, int boardHeight) {
+        boardPane.initialize(boardWidth, boardHeight);
+    }
+
+    @Override
     public void setController(GameContract.Controller controller) {
         this.controller = controller;
         boardPane.setController(controller);
@@ -33,7 +38,7 @@ public class GamePane extends VBox implements GameContract.View {
     }
 
     @Override
-    public void updateGameState(GameState gameState) {
-
+    public void updateBoardState(int[][] boardState) {
+        boardPane.updateBoardState(boardState);
     }
 }

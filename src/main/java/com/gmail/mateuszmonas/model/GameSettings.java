@@ -2,9 +2,9 @@ package com.gmail.mateuszmonas.model;
 
 public class GameSettings {
 
-    int width = 10;
-    int height = 10;
-    int playerCount = 2;
+    private int width = 10;
+    private int height = 10;
+    private int playerCount = 2;
 
     public GameSettings() {
     }

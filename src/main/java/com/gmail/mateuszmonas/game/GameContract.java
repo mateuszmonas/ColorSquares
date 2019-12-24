@@ -18,7 +18,9 @@ public interface GameContract {
 
     interface View extends BaseView<Controller> {
 
-        void updateGameState(GameState gameState);
+        void initialize(int boardWidth, int boardHeight);
+
+        void updateBoardState(int[][] boardState);
 
         void updatePauseButton(boolean gameRunning);
     }

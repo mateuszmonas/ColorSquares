@@ -10,10 +10,10 @@ public class Game {
     private boolean running = false;
     private boolean paused = true;
     private Thread gameThread;
-    private Set<GameObserver> observers = new HashSet<>();
+    GameState gameState;
 
     public Game(GameSettings gameSettings) {
-        GameState gameState = new GameState(gameSettings);
+        gameState = new GameState(gameSettings);
         gameThread = new Thread(() -> {
             Runnable runnable = gameState::update;
             while (running) {
@@ -23,7 +23,6 @@ public class Game {
                 }
                 if (!paused) {
                     Platform.runLater(runnable);
-                    observers.forEach(observer -> observer.update(gameState));
                 }
             }
         });
@@ -49,8 +48,8 @@ public class Game {
         running = false;
     }
 
-    public void addObserver(GameObserver observer) {
-        observers.add(observer);
+    public void setObserver(GameObserver observer) {
+        gameState.setObserver(observer);
     }
 
 }

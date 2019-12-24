@@ -4,7 +4,6 @@ import com.gmail.mateuszmonas.menu.MenuController;
 import com.gmail.mateuszmonas.menu.MenuPane;
 import com.gmail.mateuszmonas.model.Game;
 import com.gmail.mateuszmonas.model.GameObserver;
-import com.gmail.mateuszmonas.model.GameState;
 import com.gmail.mateuszmonas.util.GuiUtil;
 
 public class GameController implements GameContract.Controller, GameObserver {
@@ -16,12 +15,17 @@ public class GameController implements GameContract.Controller, GameObserver {
         this.view = view;
         this.game = game;
         view.setController(this);
-        game.addObserver(this);
+        game.setObserver(this);
     }
 
     @Override
     public void choosePosition(int x, int y) {
 
+    }
+
+    @Override
+    public void initialize(int boardWidth, int boardHeight) {
+        view.initialize(boardWidth, boardHeight);
     }
 
     @Override
@@ -31,8 +35,8 @@ public class GameController implements GameContract.Controller, GameObserver {
     }
 
     @Override
-    public void update(GameState gameState) {
-        view.updateGameState(gameState);
+    public void update(int[][] boardState) {
+        view.updateBoardState(boardState);
     }
 
     @Override
