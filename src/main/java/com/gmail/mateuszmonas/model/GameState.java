@@ -1,6 +1,7 @@
 package com.gmail.mateuszmonas.model;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public class GameState {
@@ -18,8 +19,24 @@ public class GameState {
         this.gameSettings = gameSettings;
         generateGrid(gameSettings.getWidth(), gameSettings.getHeight());
         for (int i = 0; i < gameSettings.getBotCount(); i++) {
-            players.add(new Player(i+1));
+            Player player = new Player(i + 1);
+            getRandomUnoccupiedField().ifPresent(player::setStartingField);
+            players.add(player);
         }
+    }
+
+    Optional<Field> getRandomUnoccupiedField() {
+        int r = ThreadLocalRandom.current().nextInt(unoccupiedFields.size());
+        int i = 0;
+        Field field = null;
+        for (Field unoccupiedField : unoccupiedFields) {
+            if (i == r) {
+                field = unoccupiedField;
+                break;
+            }
+            i++;
+        }
+        return Optional.ofNullable(field);
     }
 
     void generateGrid(int width, int height) {
@@ -27,7 +44,7 @@ public class GameState {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Field field = new Field(i, j);
-                board[i][j] = new Field(i, j);
+                board[i][j] = field;
                 unoccupiedFields.add(field);
             }
         }
@@ -46,7 +63,7 @@ public class GameState {
 
     void growFields(Set<Field> fields) {
         int color = fields.stream()
-                .map(field -> field.color)
+                .mapToInt(field -> field.color)
                 .findAny()
                 .orElse(EMPTY);
         Set<Field> newFields = fields.stream()
@@ -56,6 +73,7 @@ public class GameState {
                 .collect(Collectors.toSet());
         newFields.forEach(field -> field.color=color);
         fields.addAll(newFields);
+        unoccupiedFields.removeAll(fields);
     }
 
     public void update() {
@@ -111,6 +129,11 @@ public class GameState {
 
         public Player(int color) {
             this.color = color;
+        }
+
+        void setStartingField(Field field) {
+            fields.add(field);
+            field.color = color;
         }
     }
 }
