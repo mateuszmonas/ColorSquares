@@ -71,7 +71,7 @@ public class GameState {
                 .flatMap(Set::stream)
                 .filter(field -> field.color == EMPTY)
                 .collect(Collectors.toSet());
-        newFields.forEach(field -> field.color=color);
+        newFields.forEach(field -> field.color = color);
         fields.addAll(newFields);
         unoccupiedFields.removeAll(fields);
     }
