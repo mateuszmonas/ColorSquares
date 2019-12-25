@@ -1,11 +1,14 @@
 package com.gmail.mateuszmonas.game;
 
 import com.gmail.mateuszmonas.menu.MenuController;
-import com.gmail.mateuszmonas.menu.MenuPane;
+import com.gmail.mateuszmonas.menu.view.MenuPane;
 import com.gmail.mateuszmonas.model.Field;
 import com.gmail.mateuszmonas.model.Game;
 import com.gmail.mateuszmonas.model.GameObserver;
+import com.gmail.mateuszmonas.model.Player;
 import com.gmail.mateuszmonas.util.GuiUtil;
+
+import java.util.Set;
 
 public class GameController implements GameContract.Controller, GameObserver {
 
@@ -52,10 +55,10 @@ public class GameController implements GameContract.Controller, GameObserver {
     }
 
     @Override
-    public void gameFinished(int playerScore, boolean playerWin) {
+    public void gameFinished(Set<Player> players) {
         game.pause();
         view.showRestartButton();
-        view.showGameFinishedDialog(playerScore, playerWin);
+        view.showGameFinishedDialog(players);
     }
 
     @Override

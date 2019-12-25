@@ -110,12 +110,7 @@ public class GameState implements FieldObserver {
         randomOrder.forEach(this::growFields);
         observer.update(board);
         if (unoccupiedFields.isEmpty()) {
-            observer.gameFinished(humanPlayer.getFields().size(),
-                    players.stream()
-                            .mapToInt(player -> player.getFields().size())
-                            .max()
-                            .orElse(humanPlayer.getFields().size()) == humanPlayer.getFields().size()
-            );
+            observer.gameFinished(players);
             started = false;
         }
     }

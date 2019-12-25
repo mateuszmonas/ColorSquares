@@ -3,6 +3,9 @@ package com.gmail.mateuszmonas.game;
 import com.gmail.mateuszmonas.BaseController;
 import com.gmail.mateuszmonas.BaseView;
 import com.gmail.mateuszmonas.model.Field;
+import com.gmail.mateuszmonas.model.Player;
+
+import java.util.Set;
 
 public interface GameContract {
 
@@ -25,7 +28,7 @@ public interface GameContract {
 
         void updateBoardState(Field[][] boardState);
 
-        void showGameFinishedDialog(int playerScore, boolean playerWin);
+        void showGameFinishedDialog(Set<Player> player);
 
         void showStartButton();
 
