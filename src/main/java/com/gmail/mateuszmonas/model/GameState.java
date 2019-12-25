@@ -22,7 +22,7 @@ public class GameState {
         players.add(humanPlayer);
         for (int i = 0; i < gameSettings.getBotCount(); i++) {
             Player player = new Player(i + 2);
-            getRandomUnoccupiedField().ifPresent(player::setStartingField);
+            getRandomUnoccupiedField().ifPresent(field ->  setStartingField(player, field));
             players.add(player);
         }
         for (int i = 0; i < gameSettings.getObstructionsCount(); i++) {
@@ -71,9 +71,22 @@ public class GameState {
 
     void selectStartingPosition(int x, int y) {
         if (unoccupiedFields.contains(board[x][y])) {
-            humanPlayer.setStartingField(board[x][y]);
+            setStartingField(humanPlayer, board[x][y]);
             observer.update(boardToArray());
         }
+    }
+
+    void setStartingField(Player player, Field field) {
+        if (player.startingField != null) {
+            player.fields.clear();
+            player.startingField.color = 0;
+            unoccupiedFields.add(player.startingField);
+        }
+        player.startingField = field;
+        unoccupiedFields.remove(player.startingField);
+        player.fields.add(field);
+        field.color = player.color;
+
     }
 
     void restart() {
@@ -83,7 +96,7 @@ public class GameState {
                 .collect(Collectors.toSet());
         unoccupiedFields.forEach(field -> field.color = EMPTY);
         for (Player player : players) {
-            player.setStartingField(player.startingField);
+            setStartingField(player, player.startingField);
         }
         observer.update(boardToArray());
     }
@@ -165,16 +178,6 @@ public class GameState {
 
         public Player(int color) {
             this.color = color;
-        }
-
-        void setStartingField(Field field) {
-            if (startingField != null) {
-                fields.clear();
-                startingField.color = 0;
-            }
-            startingField = field;
-            fields.add(field);
-            field.color = color;
         }
     }
 }
