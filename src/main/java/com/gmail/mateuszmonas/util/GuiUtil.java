@@ -23,4 +23,8 @@ public final class GuiUtil {
         return Main.getPrimaryStage().getHeight();
     }
 
+    public static void closeApplication() {
+        Main.getPrimaryStage().close();
+    }
+
 }

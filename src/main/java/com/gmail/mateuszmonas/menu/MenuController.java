@@ -19,7 +19,7 @@ public class MenuController implements MenuContract.Controller {
 
     @Override
     public void exitApplication() {
-
+        GuiUtil.closeApplication();
     }
 
     @Override

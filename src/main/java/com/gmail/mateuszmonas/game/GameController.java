@@ -68,4 +68,9 @@ public class GameController implements GameContract.Controller, GameObserver {
         game.restartGame();
         view.showStartButton();
     }
+
+    @Override
+    public void startingFieldSelected() {
+
+    }
 }

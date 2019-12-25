@@ -9,9 +9,9 @@ import javafx.scene.paint.Color;
 
 public class BoardField extends Pane {
 
-    public BoardField(double prefWidth, double prefHeight) {
-        setPrefWidth(prefHeight);
-        setPrefHeight(prefHeight);
+    public BoardField(double sideLength) {
+        setPrefWidth(sideLength);
+        setPrefHeight(sideLength);
     }
 
     public void update(int i) {
