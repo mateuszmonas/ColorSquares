@@ -7,10 +7,8 @@ import java.util.stream.Collectors;
 // TODO: 2019-12-25 improve obstructions generation
 public class GameState {
 
-    private static final int EMPTY = 0;
-    private static final int BLOCKED = -1;
     private Field[][] board;
-    private Set<Field> unoccupiedFields = new HashSet<>();
+    private List<Field> unoccupiedFields = new ArrayList<>();
     private GameSettings gameSettings;
     private Set<Player> players = new HashSet<>();
     private Player humanPlayer;
@@ -23,29 +21,21 @@ public class GameState {
         players.add(humanPlayer);
         for (int i = 0; i < gameSettings.getBotCount(); i++) {
             Player player = new Player(i + 2);
-            getRandomUnoccupiedField().ifPresent(field -> setStartingField(player, field));
+            getRandomUnoccupiedFieldIndex().ifPresent(index -> setStartingField(player, unoccupiedFields.get(index)));
             players.add(player);
         }
         for (int i = 0; i < gameSettings.getObstructionsCount(); i++) {
-            getRandomUnoccupiedField().ifPresent(field -> {
-                field.color = BLOCKED;
+            getRandomUnoccupiedFieldIndex().ifPresent(index -> {
+                Field field = unoccupiedFields.get(index);
+                field.setState(FieldState.BLOCKED);
                 unoccupiedFields.remove(field);
             });
         }
     }
 
-    Optional<Field> getRandomUnoccupiedField() {
-        int r = ThreadLocalRandom.current().nextInt(unoccupiedFields.size());
-        int i = 0;
-        Field field = null;
-        for (Field unoccupiedField : unoccupiedFields) {
-            if (i == r) {
-                field = unoccupiedField;
-                break;
-            }
-            i++;
-        }
-        return Optional.ofNullable(field);
+    OptionalInt getRandomUnoccupiedFieldIndex() {
+        if(unoccupiedFields.isEmpty()) return OptionalInt.empty();
+        return OptionalInt.of(ThreadLocalRandom.current().nextInt(unoccupiedFields.size()));
     }
 
     void generateGrid(int width, int height) {
@@ -64,7 +54,7 @@ public class GameState {
                 int a = field.x + x[i];
                 int b = field.y + y[i];
                 if (0 <= a && a < board.length && 0 <= b && b < board[a].length) {
-                    field.adjacent.add(board[a][b]);
+                    field.addAdjacent((board[a][b]));
                 }
             }
         }
@@ -73,113 +63,61 @@ public class GameState {
     void selectStartingPosition(int x, int y) {
         if (unoccupiedFields.contains(board[x][y])) {
             setStartingField(humanPlayer, board[x][y]);
-            observer.update(boardToArray());
+            observer.update(board);
             observer.startingFieldSelected();
         }
     }
 
     void setStartingField(Player player, Field field) {
-        if (player.startingField != null) {
-            player.fields.clear();
-            player.startingField.color = 0;
-            unoccupiedFields.add(player.startingField);
+        if (player.getStartingField() != null) {
+            player.getStartingField().setState(FieldState.EMPTY);
+            unoccupiedFields.add(player.getStartingField());
         }
-        player.startingField = field;
-        unoccupiedFields.remove(player.startingField);
-        player.fields.add(field);
-        field.color = player.color;
-
+        player.setStartingField(field);
+        unoccupiedFields.remove(field);
     }
 
     void restart() {
         unoccupiedFields = Arrays.stream(board)
                 .flatMap(Arrays::stream)
-                .filter(field -> field.color != BLOCKED)
-                .collect(Collectors.toSet());
-        unoccupiedFields.forEach(field -> field.color = EMPTY);
+                .filter(field -> field.getState() != FieldState.BLOCKED)
+                .collect(Collectors.toList());
+        unoccupiedFields.forEach(field -> field.setState(FieldState.EMPTY));
         for (Player player : players) {
-            setStartingField(player, player.startingField);
+            setStartingField(player, player.getStartingField());
         }
-        observer.update(boardToArray());
+        observer.update(board);
     }
 
-    void growFields(Set<Field> fields) {
-        int color = fields.stream()
-                .mapToInt(field -> field.color)
-                .findAny()
-                .orElse(EMPTY);
-        Set<Field> newFields = fields.stream()
-                .map(field -> field.adjacent)
+    void growFields(Player player) {
+        Set<Field> newFields = player.getFields().stream()
+                .map(Field::getAdjacent)
                 .flatMap(Set::stream)
-                .filter(field -> field.color == EMPTY)
+                .filter(field -> field.getState() == FieldState.EMPTY)
                 .collect(Collectors.toSet());
-        newFields.forEach(field -> field.color = color);
-        fields.addAll(newFields);
-        unoccupiedFields.removeAll(fields);
+        newFields.forEach(player::addField);
+        unoccupiedFields.removeAll(newFields);
     }
 
     public void update() {
         if (unoccupiedFields.isEmpty()) return;
         List<Player> randomOrder = new ArrayList<>(players);
         Collections.shuffle(randomOrder);
-        randomOrder.forEach(player -> growFields(player.fields));
-        observer.update(boardToArray());
+        randomOrder.forEach(this::growFields);
+        observer.update(board);
         if (unoccupiedFields.isEmpty()) {
-            observer.gameFinished(humanPlayer.fields.size(),
+            observer.gameFinished(humanPlayer.getFields().size(),
                     players.stream()
-                            .mapToInt(player -> player.fields.size())
+                            .mapToInt(player -> player.getFields().size())
                             .max()
-                            .orElse(humanPlayer.fields.size()) == humanPlayer.fields.size()
+                            .orElse(humanPlayer.getFields().size()) == humanPlayer.getFields().size()
             );
         }
-    }
-
-    int[][] boardToArray() {
-        return Arrays.stream(board)
-                .map(fields -> Arrays.stream(fields)
-                        .mapToInt(field -> field.color)
-                        .toArray())
-                .toArray(int[][]::new);
     }
 
     public void setObserver(GameObserver observer) {
         this.observer = observer;
         observer.initialize(gameSettings.getWidth(), gameSettings.getHeight());
-        observer.update(boardToArray());
-    }
-
-    private static class Field {
-        int x, y;
-        int color = GameState.EMPTY;
-        Set<Field> adjacent = new HashSet<>();
-
-        public Field(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof Field)) return false;
-            Field field = (Field) o;
-            return x == field.x &&
-                    y == field.y;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(x, y);
-        }
-    }
-
-    private static class Player {
-        int color;
-        Field startingField;
-        Set<Field> fields = new HashSet<>();
-
-        public Player(int color) {
-            this.color = color;
-        }
+        observer.update(board);
     }
 }

@@ -2,6 +2,7 @@ package com.gmail.mateuszmonas.game;
 
 import com.gmail.mateuszmonas.BaseController;
 import com.gmail.mateuszmonas.BaseView;
+import com.gmail.mateuszmonas.model.Field;
 
 public interface GameContract {
 
@@ -22,7 +23,7 @@ public interface GameContract {
 
         void initialize(int boardWidth, int boardHeight);
 
-        void updateBoardState(int[][] boardState);
+        void updateBoardState(Field[][] boardState);
 
         void showGameFinishedDialog(int playerScore, boolean playerWin);
 

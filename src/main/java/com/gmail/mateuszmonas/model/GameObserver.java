@@ -4,7 +4,7 @@ public interface GameObserver {
 
     void initialize(int boardWidth, int boardHeight);
 
-    void update(int[][] boardState);
+    void update(Field[][] boardState);
 
     void gameFinished(int playerScore, boolean playerWin);
 

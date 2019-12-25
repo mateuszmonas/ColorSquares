@@ -1,6 +1,7 @@
 package com.gmail.mateuszmonas.game.view;
 
 import com.gmail.mateuszmonas.game.GameContract;
+import com.gmail.mateuszmonas.model.Field;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 
@@ -48,7 +49,7 @@ public class GamePane extends VBox implements GameContract.View {
     }
 
     @Override
-    public void updateBoardState(int[][] boardState) {
+    public void updateBoardState(Field[][] boardState) {
         boardPane.updateBoardState(boardState);
     }
 

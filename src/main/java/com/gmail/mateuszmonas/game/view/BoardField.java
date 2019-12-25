@@ -1,5 +1,8 @@
 package com.gmail.mateuszmonas.game.view;
 
+import com.gmail.mateuszmonas.model.Field;
+import com.gmail.mateuszmonas.model.FieldState;
+import com.gmail.mateuszmonas.util.GuiUtil;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -14,12 +17,14 @@ public class BoardField extends Pane {
         setPrefHeight(sideLength);
     }
 
-    public void update(int i) {
-        if (i == -1) setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-        else if (i == 0)
+    public void update(Field field) {
+        if (field.getState() == FieldState.BLOCKED) {
+            setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        } else if (field.getState() == FieldState.EMPTY) {
             setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-        else
-            setBackground(new Background(new BackgroundFill(Color.rgb((i * 100) % 256, 0, 0), CornerRadii.EMPTY, Insets.EMPTY)));
+        } else {
+            setBackground(new Background(new BackgroundFill(GuiUtil.getColor(field.getOwner().getId()), CornerRadii.EMPTY, Insets.EMPTY)));
+        }
     }
 
 }

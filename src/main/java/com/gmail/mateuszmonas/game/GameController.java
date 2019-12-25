@@ -2,6 +2,7 @@ package com.gmail.mateuszmonas.game;
 
 import com.gmail.mateuszmonas.menu.MenuController;
 import com.gmail.mateuszmonas.menu.MenuPane;
+import com.gmail.mateuszmonas.model.Field;
 import com.gmail.mateuszmonas.model.Game;
 import com.gmail.mateuszmonas.model.GameObserver;
 import com.gmail.mateuszmonas.util.GuiUtil;
@@ -35,7 +36,7 @@ public class GameController implements GameContract.Controller, GameObserver {
     }
 
     @Override
-    public void update(int[][] boardState) {
+    public void update(Field[][] boardState) {
         view.updateBoardState(boardState);
     }
 

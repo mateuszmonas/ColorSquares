@@ -1,6 +1,7 @@
 package com.gmail.mateuszmonas.game.view;
 
 import com.gmail.mateuszmonas.game.GameContract;
+import com.gmail.mateuszmonas.model.Field;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 
@@ -28,7 +29,7 @@ public class BoardPane extends GridPane {
         }
     }
 
-    public void updateBoardState(int[][] boardState) {
+    public void updateBoardState(Field[][] boardState) {
         for (int i = 0; i < boardState.length; i++) {
             for (int j = 0; j < boardState[i].length; j++) {
                 boardFields[i][j].update(boardState[i][j]);
