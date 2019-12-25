@@ -14,11 +14,15 @@ public interface MenuContract {
         void startGame();
 
         void changeSettings(GameSettings gameSettings);
+
+        void settingsButtonClicked();
     }
 
     interface View extends BaseView<Controller> {
 
-        void updateSettings(GameSettings gameSettings);
+        void setSettings(GameSettings gameSettings);
+
+        void showSettingsDialog();
 
     }
 
