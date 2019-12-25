@@ -2,13 +2,15 @@ package com.gmail.mateuszmonas.menu;
 
 import com.gmail.mateuszmonas.model.GameSettings;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import java.util.function.UnaryOperator;
 
-public class SettingsPane extends VBox {
+public class SettingsPane extends GridPane {
 
     TextField widthInput;
     TextField heightInput;
@@ -16,6 +18,11 @@ public class SettingsPane extends VBox {
     TextField obstructionsCountInput;
 
     public SettingsPane() {
+        Label widthInputLabel = new Label("width");
+        Label heightInputLabel = new Label("height");
+        Label botCountInputLabel = new Label("bot count");
+        Label obstructionsCountInputLabel = new Label("obstructions count");
+
         widthInput = new TextField();
         heightInput = new TextField();
         botCountInput = new TextField();
@@ -33,8 +40,14 @@ public class SettingsPane extends VBox {
         obstructionsCountInput.setTextFormatter(new TextFormatter<>(filter));
         obstructionsCountInput.setPromptText("obstructions count");
 
-        getChildren().addAll(widthInput, heightInput, botCountInput, obstructionsCountInput);
-
+        add(widthInputLabel, 0, 0);
+        add(widthInput, 1, 0);
+        add(heightInputLabel, 0, 1);
+        add(heightInput, 1, 1);
+        add(botCountInputLabel, 0, 2);
+        add(botCountInput, 1, 2);
+        add(obstructionsCountInputLabel, 0, 3);
+        add(obstructionsCountInput, 1, 3);
     }
 
     public GameSettings getSettings() {
