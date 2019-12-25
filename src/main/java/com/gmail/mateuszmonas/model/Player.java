@@ -18,8 +18,7 @@ public class Player {
 
     public void setStartingField(Field field) {
         if (startingField != null) {
-            fields.remove(startingField);
-            field.setState(FieldState.EMPTY);
+            fields.clear();
         }
         this.startingField = field;
         addField(field);

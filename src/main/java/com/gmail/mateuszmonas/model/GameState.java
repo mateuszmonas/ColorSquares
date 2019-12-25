@@ -69,7 +69,7 @@ public class GameState {
     }
 
     void setStartingField(Player player, Field field) {
-        if (player.getStartingField() != null) {
+        if (player.getStartingField() != null && player.getStartingField() != field) {
             player.getStartingField().setState(FieldState.EMPTY);
             unoccupiedFields.add(player.getStartingField());
         }

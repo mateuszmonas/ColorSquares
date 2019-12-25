@@ -14,6 +14,8 @@ public class BoardPane extends GridPane {
         setPrefWidth(prefWidth);
         setPrefHeight(prefHeight);
         setAlignment(Pos.CENTER);
+        setVgap(1);
+        setHgap(1);
     }
 
     public void initialize(int boardWidth, int boardHeight) {
@@ -22,7 +24,7 @@ public class BoardPane extends GridPane {
             for (int j = 0; j < boardFields[i].length; j++) {
                 int x = i;
                 int y = j;
-                boardFields[i][j] = new BoardField(Math.min(getPrefWidth() / boardWidth, getPrefHeight() / boardHeight));
+                boardFields[i][j] = new BoardField(Math.min(getPrefWidth() / boardWidth, getPrefHeight() / boardHeight) - 2);
                 boardFields[i][j].setOnMouseClicked(mouseEvent -> controller.choosePosition(x, y));
                 add(boardFields[i][j], i + 1, j + 1);
             }
