@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
+// TODO: 2019-12-25 improve obstructions generation
 public class GameState {
 
     private static final int EMPTY = 0;
@@ -22,7 +23,7 @@ public class GameState {
         players.add(humanPlayer);
         for (int i = 0; i < gameSettings.getBotCount(); i++) {
             Player player = new Player(i + 2);
-            getRandomUnoccupiedField().ifPresent(field ->  setStartingField(player, field));
+            getRandomUnoccupiedField().ifPresent(field -> setStartingField(player, field));
             players.add(player);
         }
         for (int i = 0; i < gameSettings.getObstructionsCount(); i++) {

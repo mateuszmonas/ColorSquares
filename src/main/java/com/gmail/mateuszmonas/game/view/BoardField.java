@@ -15,9 +15,11 @@ public class BoardField extends Pane {
     }
 
     public void update(int i) {
-        if(i==-1)setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-        else if(i==0)setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-        else setBackground(new Background(new BackgroundFill(Color.rgb((i * 100)%256, 0, 0), CornerRadii.EMPTY, Insets.EMPTY)));
+        if (i == -1) setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+        else if (i == 0)
+            setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        else
+            setBackground(new Background(new BackgroundFill(Color.rgb((i * 100) % 256, 0, 0), CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
 }

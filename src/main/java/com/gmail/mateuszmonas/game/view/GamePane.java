@@ -2,10 +2,7 @@ package com.gmail.mateuszmonas.game.view;
 
 import com.gmail.mateuszmonas.game.GameContract;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.layout.VBox;
-
-import java.util.Optional;
 
 
 public class GamePane extends VBox implements GameContract.View {

@@ -3,9 +3,6 @@ package com.gmail.mateuszmonas.menu;
 import com.gmail.mateuszmonas.model.GameSettings;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.scene.layout.VBox;
 
 public class MenuPane extends VBox implements MenuContract.View {
