@@ -13,6 +13,7 @@ public class GameState implements FieldObserver {
     private Set<Player> players = new HashSet<>();
     private Player humanPlayer;
     private GameObserver observer;
+    private boolean started = false;
 
     public GameState(GameSettings gameSettings) {
         this.gameSettings = gameSettings;
@@ -66,6 +67,7 @@ public class GameState implements FieldObserver {
     }
 
     void selectStartingPosition(int x, int y) {
+        if(started)return;
         if (unoccupiedFields.contains(board[x][y])) {
             setStartingField(humanPlayer, board[x][y]);
             observer.update(board);
@@ -114,7 +116,12 @@ public class GameState implements FieldObserver {
                             .max()
                             .orElse(humanPlayer.getFields().size()) == humanPlayer.getFields().size()
             );
+            started = false;
         }
+    }
+
+    public void start() {
+        started = true;
     }
 
     @Override

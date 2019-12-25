@@ -29,14 +29,11 @@ public class Game {
 
     public void start() {
         paused = false;
+        gameState.start();
     }
 
     public void pause() {
         paused = true;
-    }
-
-    public boolean isPaused() {
-        return paused;
     }
 
     public void stop() {
