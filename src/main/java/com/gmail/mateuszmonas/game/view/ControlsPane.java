@@ -20,6 +20,7 @@ public class ControlsPane extends HBox {
         startButton = new Button("start");
         pauseButton = new Button("pause");
         restartButton = new Button("restart");
+        startButton.setDisable(true);
         pauseButton.setVisible(false);
         restartButton.setVisible(false);
 
@@ -47,6 +48,10 @@ public class ControlsPane extends HBox {
         startButton.setVisible(false);
         pauseButton.setVisible(false);
         restartButton.setVisible(true);
+    }
+
+    public void enableStartButton() {
+        startButton.setDisable(false);
     }
 
     public void setController(GameContract.Controller controller) {

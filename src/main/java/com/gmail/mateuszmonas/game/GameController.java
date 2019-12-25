@@ -71,6 +71,6 @@ public class GameController implements GameContract.Controller, GameObserver {
 
     @Override
     public void startingFieldSelected() {
-
+        view.enableStartButton();
     }
 }

@@ -73,6 +73,7 @@ public class GameState {
         if (unoccupiedFields.contains(board[x][y])) {
             setStartingField(humanPlayer, board[x][y]);
             observer.update(boardToArray());
+            observer.startingFieldSelected();
         }
     }
 

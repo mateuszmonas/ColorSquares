@@ -32,6 +32,8 @@ public interface GameContract {
 
         void showRestartButton();
 
+        void enableStartButton();
+
     }
 
 

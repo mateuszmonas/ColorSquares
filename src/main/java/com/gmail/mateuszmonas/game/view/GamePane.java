@@ -63,4 +63,9 @@ public class GamePane extends VBox implements GameContract.View {
 
         alert.showAndWait();
     }
+
+    @Override
+    public void enableStartButton() {
+        controlsPane.enableStartButton();
+    }
 }
