@@ -9,6 +9,7 @@ public class Field {
     private FieldState state = FieldState.EMPTY;
     private Player owner;
     private Set<Field> adjacent = new HashSet<>();
+    private FieldObserver observer;
 
     public Field(int x, int y) {
         this.x = x;
@@ -16,8 +17,8 @@ public class Field {
     }
 
     public void setOwner(Player owner) {
-        this.state = FieldState.OCCUPIED;
         this.owner = owner;
+        setState(FieldState.OCCUPIED);
     }
 
     public FieldState getState() {
@@ -25,10 +26,18 @@ public class Field {
     }
 
     public void setState(FieldState state) {
-        if (state == FieldState.OCCUPIED)
+        if (state == FieldState.OCCUPIED && owner==null)
             throw new IllegalArgumentException("can't set state to occupied without owner");
-        this.owner = null;
+        if (state != FieldState.OCCUPIED) {
+            owner = null;
+        }
         this.state = state;
+        observer.onFieldStateChanged(this);
+    }
+
+    public void setObserver(FieldObserver observer) {
+        this.observer = observer;
+        observer.onFieldStateChanged(this);
     }
 
     public void addAdjacent(Field field) {

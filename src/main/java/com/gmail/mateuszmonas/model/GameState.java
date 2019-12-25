@@ -5,10 +5,10 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 // TODO: 2019-12-25 improve obstructions generation
-public class GameState {
+public class GameState implements FieldObserver {
 
     private Field[][] board;
-    private List<Field> unoccupiedFields = new ArrayList<>();
+    private Set<Field> unoccupiedFields = new HashSet<>();
     private GameSettings gameSettings;
     private Set<Player> players = new HashSet<>();
     private Player humanPlayer;
@@ -21,21 +21,26 @@ public class GameState {
         players.add(humanPlayer);
         for (int i = 0; i < gameSettings.getBotCount(); i++) {
             Player player = new Player(i + 2);
-            getRandomUnoccupiedFieldIndex().ifPresent(index -> setStartingField(player, unoccupiedFields.get(index)));
+            getRandomUnoccupiedField().ifPresent(field -> setStartingField(player, field));
             players.add(player);
         }
         for (int i = 0; i < gameSettings.getObstructionsCount(); i++) {
-            getRandomUnoccupiedFieldIndex().ifPresent(index -> {
-                Field field = unoccupiedFields.get(index);
-                field.setState(FieldState.BLOCKED);
-                unoccupiedFields.remove(field);
-            });
+            getRandomUnoccupiedField().ifPresent(field -> field.setState(FieldState.BLOCKED));
         }
     }
 
-    OptionalInt getRandomUnoccupiedFieldIndex() {
-        if (unoccupiedFields.isEmpty()) return OptionalInt.empty();
-        return OptionalInt.of(ThreadLocalRandom.current().nextInt(unoccupiedFields.size()));
+    Optional<Field> getRandomUnoccupiedField() {
+        int r = ThreadLocalRandom.current().nextInt(unoccupiedFields.size());
+        int i = 0;
+        Field field = null;
+        for (Field unoccupiedField : unoccupiedFields) {
+            if (i == r) {
+                field = unoccupiedField;
+                break;
+            }
+            i++;
+        }
+        return Optional.ofNullable(field);
     }
 
     void generateGrid(int width, int height) {
@@ -44,7 +49,7 @@ public class GameState {
             for (int j = 0; j < height; j++) {
                 Field field = new Field(i, j);
                 board[i][j] = field;
-                unoccupiedFields.add(field);
+                board[i][j].setObserver(this);
             }
         }
         int[] x = {1, 0, -1, 0};
@@ -71,17 +76,15 @@ public class GameState {
     void setStartingField(Player player, Field field) {
         if (player.getStartingField() != null && player.getStartingField() != field) {
             player.getStartingField().setState(FieldState.EMPTY);
-            unoccupiedFields.add(player.getStartingField());
         }
         player.setStartingField(field);
-        unoccupiedFields.remove(field);
     }
 
     void restart() {
         unoccupiedFields = Arrays.stream(board)
                 .flatMap(Arrays::stream)
                 .filter(field -> field.getState() != FieldState.BLOCKED)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
         unoccupiedFields.forEach(field -> field.setState(FieldState.EMPTY));
         for (Player player : players) {
             setStartingField(player, player.getStartingField());
@@ -96,7 +99,6 @@ public class GameState {
                 .filter(field -> field.getState() == FieldState.EMPTY)
                 .collect(Collectors.toSet());
         newFields.forEach(player::addField);
-        unoccupiedFields.removeAll(newFields);
     }
 
     public void update() {
@@ -113,6 +115,12 @@ public class GameState {
                             .orElse(humanPlayer.getFields().size()) == humanPlayer.getFields().size()
             );
         }
+    }
+
+    @Override
+    public void onFieldStateChanged(Field field) {
+        if(field.getState()==FieldState.EMPTY) unoccupiedFields.add(field);
+        else unoccupiedFields.remove(field);
     }
 
     public void setObserver(GameObserver observer) {
