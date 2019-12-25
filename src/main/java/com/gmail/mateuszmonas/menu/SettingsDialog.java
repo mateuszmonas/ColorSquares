@@ -4,7 +4,6 @@ import com.gmail.mateuszmonas.model.GameSettings;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
-import javafx.util.Callback;
 
 
 public class SettingsDialog extends Dialog<GameSettings> {
