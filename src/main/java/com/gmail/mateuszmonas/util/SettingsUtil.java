@@ -15,19 +15,19 @@ public final class SettingsUtil {
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static String settingsPath = "settings.json";
 
-    public static GameSettings getGameSettings() {
+    public static GameSettings readGameSettings() {
         GameSettings gameSettings;
         try {
-            gameSettings = gson.fromJson(new JsonReader(new FileReader(settingsPath)), GameSettings.class);
+            gameSettings = gson.fromJson(new FileReader(settingsPath), GameSettings.class);
         } catch (FileNotFoundException e) {
             System.err.println("could not read file " + settingsPath);
             gameSettings = new GameSettings(10, 10, 2, 10);
-            setGameSettings(gameSettings);
+            saveGameSettings(gameSettings);
         }
         return gameSettings;
     }
 
-    public static void setGameSettings(GameSettings gameSettings) {
+    public static void saveGameSettings(GameSettings gameSettings) {
         try {
             FileWriter writer = new FileWriter(settingsPath);
             gson.toJson(gameSettings, writer);

@@ -1,6 +1,6 @@
 {
   "width": 101,
-  "height": 10,
+  "height": 100,
   "botCount": 2,
-  "obstructionsCount": 2
+  "obstructionsCount": 1000
 }

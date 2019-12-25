@@ -49,6 +49,6 @@ public class SettingsPane extends VBox {
         widthInput.setText(String.valueOf(gameSettings.getWidth()));
         heightInput.setText(String.valueOf(gameSettings.getHeight()));
         botCountInput.setText(String.valueOf(gameSettings.getBotCount()));
-        obstructionsCountInput.setText(String.valueOf(gameSettings.getBotCount()));
+        obstructionsCountInput.setText(String.valueOf(gameSettings.getObstructionsCount()));
     }
 }

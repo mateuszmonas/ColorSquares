@@ -14,7 +14,7 @@ public class MenuController implements MenuContract.Controller {
 
     public MenuController(MenuContract.View view) {
         this.view = view;
-        this.gameSettings = SettingsUtil.getGameSettings();
+        this.gameSettings = SettingsUtil.readGameSettings();
         view.setController(this);
         view.setSettings(gameSettings);
     }
@@ -31,7 +31,7 @@ public class MenuController implements MenuContract.Controller {
 
     @Override
     public void changeSettings(GameSettings gameSettings) {
-        SettingsUtil.setGameSettings(gameSettings);
+        SettingsUtil.saveGameSettings(gameSettings);
         this.gameSettings = gameSettings;
         view.setSettings(gameSettings);
     }
