@@ -11,6 +11,8 @@ public interface GameContract {
 
         void startGame();
 
+        void pauseGame();
+
         void exitGame();
 
         void restartGame();
@@ -22,9 +24,13 @@ public interface GameContract {
 
         void updateBoardState(int[][] boardState);
 
-        void updatePauseButton(boolean gameRunning);
-
         void showGameFinishedDialog(int playerScore, boolean playerWin);
+
+        void showStartButton();
+
+        void showPauseButton();
+
+        void showRestartButton();
 
     }
 

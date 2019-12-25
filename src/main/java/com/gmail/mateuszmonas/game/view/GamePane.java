@@ -36,8 +36,18 @@ public class GamePane extends VBox implements GameContract.View {
     }
 
     @Override
-    public void updatePauseButton(boolean gameRunning) {
-        controlsPane.updatePauseButton(gameRunning);
+    public void showStartButton() {
+        controlsPane.showStartButton();
+    }
+
+    @Override
+    public void showPauseButton() {
+        controlsPane.showPauseButton();
+    }
+
+    @Override
+    public void showRestartButton() {
+        controlsPane.showRestartButton();
     }
 
     @Override
@@ -47,16 +57,10 @@ public class GamePane extends VBox implements GameContract.View {
 
     @Override
     public void showGameFinishedDialog(int playerScore, boolean playerWin) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game is finished");
         alert.setHeaderText("You " + (playerWin ? "won" : "lost") + ", your score is: " + playerScore);
-        alert.setContentText("Would you like to play again?");
 
-        Optional<ButtonType> result = alert.showAndWait();
-        result.ifPresent(e -> {
-            if (e == ButtonType.OK) {
-                controller.restartGame();
-            }
-        });
+        alert.showAndWait();
     }
 }

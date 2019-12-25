@@ -5,7 +5,7 @@ import javafx.application.Platform;
 public class Game {
 
     GameState gameState;
-    private boolean running = false;
+    private boolean running = true;
     private boolean paused = true;
     private Thread gameThread;
 
@@ -24,16 +24,15 @@ public class Game {
             }
         });
         gameThread.setDaemon(true);
-    }
-
-    public void start() {
-        running = true;
-        paused = true;
         gameThread.start();
     }
 
-    public void changePausedState() {
-        paused = !paused;
+    public void start() {
+        paused = false;
+    }
+
+    public void pause() {
+        paused = true;
     }
 
     public boolean isPaused() {

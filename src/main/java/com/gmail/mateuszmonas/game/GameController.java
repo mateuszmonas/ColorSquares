@@ -30,8 +30,8 @@ public class GameController implements GameContract.Controller, GameObserver {
 
     @Override
     public void startGame() {
-        game.changePausedState();
-        view.updatePauseButton(game.isPaused());
+        game.start();
+        view.showPauseButton();
     }
 
     @Override
@@ -47,19 +47,25 @@ public class GameController implements GameContract.Controller, GameObserver {
 
     @Override
     public void start() {
-        game.start();
         GuiUtil.changeScene(view);
     }
 
     @Override
     public void gameFinished(int playerScore, boolean playerWin) {
-        game.changePausedState();
-        view.updatePauseButton(game.isPaused());
+        game.pause();
+        view.showRestartButton();
         view.showGameFinishedDialog(playerScore, playerWin);
+    }
+
+    @Override
+    public void pauseGame() {
+        game.pause();
+        view.showStartButton();
     }
 
     @Override
     public void restartGame() {
         game.restartGame();
+        view.showStartButton();
     }
 }
