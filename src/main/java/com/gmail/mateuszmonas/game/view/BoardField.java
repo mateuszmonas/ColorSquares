@@ -23,7 +23,7 @@ public class BoardField extends Pane {
         } else if (field.getState() == FieldState.EMPTY) {
             setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         } else {
-            setBackground(new Background(new BackgroundFill(GuiUtil.getColor(field.getOwner().getId()), CornerRadii.EMPTY, Insets.EMPTY)));
+            setBackground(new Background(new BackgroundFill(GuiUtil.getColor(field.getOwnerId()), CornerRadii.EMPTY, Insets.EMPTY)));
         }
     }
 

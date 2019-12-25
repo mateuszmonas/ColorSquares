@@ -34,7 +34,7 @@ public class GameState {
     }
 
     OptionalInt getRandomUnoccupiedFieldIndex() {
-        if(unoccupiedFields.isEmpty()) return OptionalInt.empty();
+        if (unoccupiedFields.isEmpty()) return OptionalInt.empty();
         return OptionalInt.of(ThreadLocalRandom.current().nextInt(unoccupiedFields.size()));
     }
 

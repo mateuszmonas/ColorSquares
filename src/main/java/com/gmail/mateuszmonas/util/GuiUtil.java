@@ -6,8 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 
-import java.util.Iterator;
-
 public final class GuiUtil {
 
     private static final Color[] COLORS = {

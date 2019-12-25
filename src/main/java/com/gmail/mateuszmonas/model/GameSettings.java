@@ -7,9 +7,6 @@ public class GameSettings {
     private int botCount = 2;
     private int obstructionsCount = 10;
 
-    public GameSettings() {
-    }
-
     public GameSettings(int width, int height, int botCount, int obstructionsCount) {
         this.width = width;
         this.height = height;

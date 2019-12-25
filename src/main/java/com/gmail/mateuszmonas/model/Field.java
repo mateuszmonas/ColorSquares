@@ -20,18 +20,15 @@ public class Field {
         this.owner = owner;
     }
 
-    public Player getOwner() {
-        return owner;
+    public FieldState getState() {
+        return state;
     }
 
     public void setState(FieldState state) {
-        if(state==FieldState.OCCUPIED) throw new IllegalArgumentException("can't set state to occupied without owner");
+        if (state == FieldState.OCCUPIED)
+            throw new IllegalArgumentException("can't set state to occupied without owner");
         this.owner = null;
         this.state = state;
-    }
-
-    public FieldState getState() {
-        return state;
     }
 
     public void addAdjacent(Field field) {
@@ -40,6 +37,11 @@ public class Field {
 
     public Set<Field> getAdjacent() {
         return adjacent;
+    }
+
+    public int getOwnerId() {
+        if (state != FieldState.OCCUPIED) throw new IllegalStateException("field is not occupied");
+        return owner.getId();
     }
 
     @Override
