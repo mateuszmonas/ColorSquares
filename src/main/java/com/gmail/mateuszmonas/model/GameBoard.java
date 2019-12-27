@@ -2,6 +2,7 @@ package com.gmail.mateuszmonas.model;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 public class GameBoard implements FieldObserver {
 
@@ -82,8 +83,8 @@ public class GameBoard implements FieldObserver {
     }
 
     // get all blocked fields connected to given subGraph
-    Set<Field> getBorderElements(Field field, int subGraphNo, int[][] visited) {
-        Set<Field> borderElements = new HashSet<>();
+    Set<Field> getDisconnectingElements(Field field, int subGraphNo, int[][] visited) {
+        Set<Field> disconnectingElements = new HashSet<>();
         Deque<Field> stack = new ArrayDeque<>();
         stack.add(field);
         while (!stack.isEmpty()) {
@@ -93,38 +94,40 @@ public class GameBoard implements FieldObserver {
                 if (visited[field1.x][field1.y]==UNVISITED && !field1.isBlocked()) {
                     stack.add(field1);
                 } else if (field1.isBlocked()) {
-                    borderElements.add(field1);
+                    disconnectingElements.add(field1);
                 }
             }
         }
-        return borderElements;
+        return disconnectingElements;
     }
 
 
-    boolean isConnected() {
+    Map<Field, List<Integer>> getDisconnectingFields() {
         int[][] visited = new int[board.length][board[0].length];
         for (int[] ints : visited) {
             Arrays.fill(ints, UNVISITED);
         }
         // map of border elements and list of subGraphs they are connected to
-        Map<Field, List<Integer>> borderElements = new HashMap<>();
+        Map<Field, List<Integer>> disconnectingElements = new HashMap<>();
         int subGraphNo = UNVISITED;
         for (Field[] fields : board) {
             for (Field field : fields) {
                 if (visited[field.x][field.y]==UNVISITED && !field.isBlocked()) {
-                    for (Field borderElement : getBorderElements(field, ++subGraphNo, visited)) {
-                        if (!borderElements.containsKey(borderElement)) {
+                    for (Field disconnectingElement : getDisconnectingElements(field, ++subGraphNo, visited)) {
+                        if (!disconnectingElements.containsKey(disconnectingElement)) {
                             List<Integer> temp = new ArrayList<>();
                             temp.add(subGraphNo);
-                            borderElements.put(borderElement, temp);
+                            disconnectingElements.put(disconnectingElement, temp);
                         } else {
-                            borderElements.get(borderElement).add(subGraphNo);
+                            disconnectingElements.get(disconnectingElement).add(subGraphNo);
                         }
                     }
                 }
             }
         }
-        return subGraphNo == UNVISITED + 1;
+        return disconnectingElements.entrySet().stream()
+                .filter(entry -> 1<entry.getValue().size())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     void generateObstructions(int obstructionsCount) {

@@ -33,10 +33,10 @@ class GameBoardTest {
         int height = 10;
         int obstructionsCount = 0;
         GameBoard gameBoard = new GameBoard(width, height, obstructionsCount);
-        assertTrue(gameBoard.isConnected());
+        assertEquals(0, gameBoard.getDisconnectingFields().size());
         gameBoard.getFieldAt(1, 0).setState(FieldState.BLOCKED);
         gameBoard.getFieldAt(1, 1).setState(FieldState.BLOCKED);
         gameBoard.getFieldAt(0, 1).setState(FieldState.BLOCKED);
-        assertFalse(gameBoard.isConnected());
+        assertEquals(2, gameBoard.getDisconnectingFields().size());
     }
 }
