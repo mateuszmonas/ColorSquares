@@ -81,26 +81,46 @@ public class GameBoard implements FieldObserver {
         return Optional.ofNullable(field);
     }
 
-    void dfs(Field field, int subGraphNo) {
+    // get all blocked fields connected to given subGraph
+    Set<Field> getBorderElements(Field field, int subGraphNo, int[][] visited) {
+        Set<Field> borderElements = new HashSet<>();
         Deque<Field> stack = new ArrayDeque<>();
         stack.add(field);
         while (!stack.isEmpty()) {
             Field currentField = stack.pop();
-            currentField.setSubGraphNo(subGraphNo);
+            visited[currentField.x][currentField.y] = subGraphNo;
             for (Field field1 : currentField.getAdjacent()) {
-                if (!field1.isVisited() && !field1.isBlocked()) {
+                if (visited[field1.x][field1.y]==UNVISITED && !field1.isBlocked()) {
                     stack.add(field1);
+                } else if (field1.isBlocked()) {
+                    borderElements.add(field1);
                 }
             }
         }
+        return borderElements;
     }
 
+
     boolean isConnected() {
+        int[][] visited = new int[board.length][board[0].length];
+        for (int[] ints : visited) {
+            Arrays.fill(ints, UNVISITED);
+        }
+        // map of border elements and list of subGraphs they are connected to
+        Map<Field, List<Integer>> borderElements = new HashMap<>();
         int subGraphNo = UNVISITED;
         for (Field[] fields : board) {
             for (Field field : fields) {
-                if (!field.isVisited()) {
-                    dfs(field, subGraphNo++);
+                if (visited[field.x][field.y]==UNVISITED && !field.isBlocked()) {
+                    for (Field borderElement : getBorderElements(field, ++subGraphNo, visited)) {
+                        if (!borderElements.containsKey(borderElement)) {
+                            List<Integer> temp = new ArrayList<>();
+                            temp.add(subGraphNo);
+                            borderElements.put(borderElement, temp);
+                        } else {
+                            borderElements.get(borderElement).add(subGraphNo);
+                        }
+                    }
                 }
             }
         }
