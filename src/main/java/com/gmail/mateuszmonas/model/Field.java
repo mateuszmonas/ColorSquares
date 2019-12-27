@@ -4,8 +4,11 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import static com.gmail.mateuszmonas.model.GameBoard.UNVISITED;
+
 public class Field {
     int x, y;
+    int subGraphNo;
     private FieldState state = FieldState.EMPTY;
     private Player owner;
     private Set<Field> adjacent = new HashSet<>();
@@ -19,10 +22,6 @@ public class Field {
     public void setOwner(Player owner) {
         this.owner = owner;
         setState(FieldState.OCCUPIED);
-    }
-
-    public FieldState getState() {
-        return state;
     }
 
     public void setState(FieldState state) {
@@ -60,6 +59,22 @@ public class Field {
         Field field = (Field) o;
         return x == field.x &&
                 y == field.y;
+    }
+
+    public void setSubGraphNo(int subGraphNo) {
+        this.subGraphNo = subGraphNo;
+    }
+
+    public boolean isBlocked() {
+        return state == FieldState.BLOCKED;
+    }
+
+    public boolean isEmpty() {
+        return state == FieldState.EMPTY;
+    }
+
+    public boolean isVisited() {
+        return subGraphNo == UNVISITED;
     }
 
     @Override

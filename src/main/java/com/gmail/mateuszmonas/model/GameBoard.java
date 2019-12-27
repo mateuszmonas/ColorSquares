@@ -5,37 +5,19 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GameBoard implements FieldObserver {
 
+    public static final int UNVISITED = -1;
     private Field[][] board;
-    private Node[][] graph;
-    private static final int UNVISITED = -1;
     private Set<Field> unoccupiedFields = new HashSet<>();
 
-    public GameBoard(int width, int height) {
-        generateGrid(width, height);
-    }
-
-    void reset() {
-        for (Field[] fields : board) {
-            for (Field field : fields) {
-                if (field.getState() != FieldState.BLOCKED) {
-                    field.setState(FieldState.EMPTY);
-                    unoccupiedFields.add(field);
-                }
-            }
-        }
-    }
-
-    boolean isFull() {
-        return unoccupiedFields.isEmpty();
-    }
-
-    void generateGrid(int width, int height) {
+    public GameBoard(int width, int height, int obstructionsCount) {
         board = new Field[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Field field = new Field(i, j);
                 board[i][j] = field;
                 board[i][j].setObserver(this);
+
+
             }
         }
         int[] x = {1, 0, -1, 0};
@@ -49,6 +31,22 @@ public class GameBoard implements FieldObserver {
                 }
             }
         }
+        generateObstructions(obstructionsCount);
+    }
+
+    void reset() {
+        for (Field[] fields : board) {
+            for (Field field : fields) {
+                if (!field.isBlocked()) {
+                    field.setState(FieldState.EMPTY);
+                    unoccupiedFields.add(field);
+                }
+            }
+        }
+    }
+
+    boolean isFull() {
+        return unoccupiedFields.isEmpty();
     }
 
     public Field[][] getBoard() {
@@ -60,12 +58,12 @@ public class GameBoard implements FieldObserver {
     }
 
     boolean isFieldEmpty(int x, int y) {
-        return board[x][y].getState() == FieldState.EMPTY;
+        return board[x][y].isEmpty();
     }
 
     @Override
     public void onFieldStateChanged(Field field) {
-        if(field.getState()==FieldState.EMPTY) unoccupiedFields.add(field);
+        if(field.isEmpty()) unoccupiedFields.add(field);
         else unoccupiedFields.remove(field);
     }
 
@@ -83,15 +81,15 @@ public class GameBoard implements FieldObserver {
         return Optional.ofNullable(field);
     }
 
-    void dfs(Node node, int subGraphNo) {
-        Deque<Node> stack = new ArrayDeque<>();
-        stack.add(node);
+    void dfs(Field field, int subGraphNo) {
+        Deque<Field> stack = new ArrayDeque<>();
+        stack.add(field);
         while (!stack.isEmpty()) {
-            Node currentNode = stack.pop();
-            currentNode.setSubGraphNo(subGraphNo);
-            for (Node node1 : currentNode.getAdjacent()) {
-                if (!node1.isVisited() && !node1.isBlocked()) {
-                    stack.add(node1);
+            Field currentField = stack.pop();
+            currentField.setSubGraphNo(subGraphNo);
+            for (Field field1 : currentField.getAdjacent()) {
+                if (!field1.isVisited() && !field1.isBlocked()) {
+                    stack.add(field1);
                 }
             }
         }
@@ -99,45 +97,19 @@ public class GameBoard implements FieldObserver {
 
     boolean isConnected() {
         int subGraphNo = UNVISITED;
-        for (Node[] nodes : graph) {
-            for (Node node : nodes) {
-                if (node.isVisited()) {
-                    dfs(node, subGraphNo++);
+        for (Field[] fields : board) {
+            for (Field field : fields) {
+                if (field.isVisited()) {
+                    dfs(field, subGraphNo++);
                 }
             }
         }
         return UNVISITED + 1 < subGraphNo;
     }
 
-    private static class Node {
-        Field field;
-        int subGraphNo;
-        Set<Node> adjacent;
-
-        public Node(Field field) {
-            this.field = field;
-            subGraphNo = -1;
-        }
-
-        public void setSubGraphNo(int subGraphNo) {
-            this.subGraphNo = subGraphNo;
-        }
-
-        public Set<Node> getAdjacent() {
-            return adjacent;
-        }
-
-        public void setAdjacent(Set<Node> adjacent) {
-            this.adjacent = adjacent;
-        }
-
-        boolean isBlocked() {
-            return field.getState() == FieldState.BLOCKED;
-        }
-
-        boolean isVisited() {
-            return subGraphNo == UNVISITED;
+    void generateObstructions(int obstructionsCount) {
+        for (int i = 0; i < obstructionsCount; i++) {
+            getRandomUnoccupiedField().ifPresent(field -> field.setState(FieldState.BLOCKED));
         }
     }
-
 }

@@ -18,9 +18,9 @@ public class BoardField extends Pane {
     }
 
     public void update(Field field) {
-        if (field.getState() == FieldState.BLOCKED) {
+        if (field.isBlocked()) {
             setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-        } else if (field.getState() == FieldState.EMPTY) {
+        } else if (field.isEmpty()) {
             setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         } else {
             setBackground(new Background(new BackgroundFill(GuiUtil.getColor(field.getOwnerId()), CornerRadii.EMPTY, Insets.EMPTY)));

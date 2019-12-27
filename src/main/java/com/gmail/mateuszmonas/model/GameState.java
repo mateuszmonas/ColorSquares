@@ -16,7 +16,7 @@ public class GameState {
 
     public GameState(GameSettings gameSettings) {
         this.gameSettings = gameSettings;
-        gameBoard = new GameBoard(gameSettings.getWidth(), gameSettings.getHeight());
+        gameBoard = new GameBoard(gameSettings.getWidth(), gameSettings.getHeight(), gameSettings.getObstructionsCount());
         humanPlayer = new Player(1);
         players.add(humanPlayer);
         for (int i = 0; i < gameSettings.getBotCount(); i++) {
@@ -54,7 +54,7 @@ public class GameState {
         Set<Field> newFields = player.getFields().stream()
                 .map(Field::getAdjacent)
                 .flatMap(Set::stream)
-                .filter(field -> field.getState() == FieldState.EMPTY)
+                .filter(Field::isEmpty)
                 .collect(Collectors.toSet());
         newFields.forEach(player::addField);
     }
