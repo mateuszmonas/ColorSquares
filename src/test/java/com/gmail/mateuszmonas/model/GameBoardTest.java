@@ -29,7 +29,7 @@ class GameBoardTest {
     }
 
     @Test
-    void testIsConnected() {
+    void testGetDisconnectingFields() {
         int width = 100;
         int height = 100;
         int obstructionsCount = 0;
@@ -47,7 +47,7 @@ class GameBoardTest {
         int height = 100;
         int obstructionsCount = 5000;
         GameBoard gameBoard = new GameBoard(width, height, obstructionsCount);
-        gameBoard.removeDisconnectingObstructions(gameBoard.getDisconnectingFields());
+        gameBoard.removeDisconnectingObstructions();
         assertEquals(0, gameBoard.getDisconnectingFields().size());
     }
 

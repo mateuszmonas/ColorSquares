@@ -129,25 +129,35 @@ public class GameBoard implements FieldObserver {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    void removeDisconnectingObstructions(Map<Field, Set<Integer>> disconnectingElements) {
+    void removeDisconnectingObstructions() {
+        Map<Field, Set<Integer>> disconnectingElements = getDisconnectingFields();
+        // sometimes not all disconnecting elements are removed so we repeat the process until they are
         while (!disconnectingElements.isEmpty()) {
-            // find field disconnecting most subGraphs
-            Map.Entry<Field, Set<Integer>> fieldEntry = disconnectingElements.entrySet().stream().max(Comparator.comparingInt(o -> o.getValue().size())).orElse(null);
-            // set its state to empty
-            fieldEntry.getKey().setState(FieldState.EMPTY);
-            // remove all elements disconnecting same subGraphs as fieldEntry from map
-            disconnectingElements.entrySet().stream()
-                    .filter(entry -> entry.getValue().equals(fieldEntry.getValue()))
-                    .map(Map.Entry::getKey)
-                    .collect(Collectors.toSet())
-                    .forEach(disconnectingElements::remove);
+            while (!disconnectingElements.isEmpty()) {
+                // find field disconnecting most subGraphs
+                Map.Entry<Field, Set<Integer>> fieldEntry = disconnectingElements.entrySet().stream().max(Comparator.comparingInt(o -> o.getValue().size())).orElse(null);
+                // set its state to empty
+                fieldEntry.getKey().setState(FieldState.EMPTY);
+                // remove all elements disconnecting same subGraphs as fieldEntry from map
+                disconnectingElements.entrySet().stream()
+                        .filter(entry -> entry.getValue().equals(fieldEntry.getValue()))
+                        .map(Map.Entry::getKey)
+                        .collect(Collectors.toSet())
+                        .forEach(disconnectingElements::remove);
+            }
+            disconnectingElements = getDisconnectingFields();
         }
+
     }
 
     void generateObstructions(int obstructionsCount) {
         for (int i = 0; i < obstructionsCount; i++) {
             getRandomUnoccupiedField().ifPresent(field -> field.setState(FieldState.BLOCKED));
         }
-        removeDisconnectingObstructions(getDisconnectingFields());
+        Map<Field, Set<Integer>> disconnectingElements = getDisconnectingFields();
+        while (!disconnectingElements.isEmpty()) {
+            removeDisconnectingObstructions();
+            disconnectingElements = getDisconnectingFields();
+        }
     }
 }
