@@ -99,12 +99,12 @@ public class GameBoard implements FieldObserver {
         int subGraphNo = UNVISITED;
         for (Field[] fields : board) {
             for (Field field : fields) {
-                if (field.isVisited()) {
+                if (!field.isVisited()) {
                     dfs(field, subGraphNo++);
                 }
             }
         }
-        return UNVISITED + 1 < subGraphNo;
+        return subGraphNo == UNVISITED + 1;
     }
 
     void generateObstructions(int obstructionsCount) {

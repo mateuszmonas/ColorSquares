@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class GameBoardTest {
 
@@ -29,14 +28,15 @@ class GameBoardTest {
     }
 
     @Test
-    void isFull() {
-    }
-
-    @Test
-    void isFieldEmpty() {
-    }
-
-    @Test
     void isConnected() {
+        int width = 10;
+        int height = 10;
+        int obstructionsCount = 0;
+        GameBoard gameBoard = new GameBoard(width, height, obstructionsCount);
+        assertTrue(gameBoard.isConnected());
+        gameBoard.getFieldAt(1, 0).setState(FieldState.BLOCKED);
+        gameBoard.getFieldAt(1, 1).setState(FieldState.BLOCKED);
+        gameBoard.getFieldAt(0, 1).setState(FieldState.BLOCKED);
+        assertFalse(gameBoard.isConnected());
     }
 }
