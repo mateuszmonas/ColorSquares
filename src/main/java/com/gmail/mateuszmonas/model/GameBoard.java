@@ -17,8 +17,6 @@ public class GameBoard implements FieldObserver {
                 Field field = new Field(i, j);
                 board[i][j] = field;
                 board[i][j].setObserver(this);
-
-
             }
         }
         int[] x = {1, 0, -1, 0};
@@ -86,12 +84,13 @@ public class GameBoard implements FieldObserver {
     Set<Field> getDisconnectingElements(Field field, int subGraphNo, int[][] visited) {
         Set<Field> disconnectingElements = new HashSet<>();
         Deque<Field> stack = new ArrayDeque<>();
+        visited[field.x][field.y] = subGraphNo;
         stack.add(field);
         while (!stack.isEmpty()) {
             Field currentField = stack.pop();
-            visited[currentField.x][currentField.y] = subGraphNo;
             for (Field field1 : currentField.getAdjacent()) {
                 if (visited[field1.x][field1.y]==UNVISITED && !field1.isBlocked()) {
+                    visited[field1.x][field1.y] = subGraphNo;
                     stack.add(field1);
                 } else if (field1.isBlocked()) {
                     disconnectingElements.add(field1);
@@ -102,20 +101,20 @@ public class GameBoard implements FieldObserver {
     }
 
 
-    Map<Field, List<Integer>> getDisconnectingFields() {
+    Map<Field, Set<Integer>> getDisconnectingFields() {
         int[][] visited = new int[board.length][board[0].length];
         for (int[] ints : visited) {
             Arrays.fill(ints, UNVISITED);
         }
         // map of border elements and list of subGraphs they are connected to
-        Map<Field, List<Integer>> disconnectingElements = new HashMap<>();
+        Map<Field, Set<Integer>> disconnectingElements = new HashMap<>();
         int subGraphNo = UNVISITED;
         for (Field[] fields : board) {
             for (Field field : fields) {
                 if (visited[field.x][field.y]==UNVISITED && !field.isBlocked()) {
                     for (Field disconnectingElement : getDisconnectingElements(field, ++subGraphNo, visited)) {
                         if (!disconnectingElements.containsKey(disconnectingElement)) {
-                            List<Integer> temp = new ArrayList<>();
+                            Set<Integer> temp = new HashSet<>();
                             temp.add(subGraphNo);
                             disconnectingElements.put(disconnectingElement, temp);
                         } else {
@@ -130,9 +129,25 @@ public class GameBoard implements FieldObserver {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
+    void removeDisconnectingObstructions(Map<Field, Set<Integer>> disconnectingElements) {
+        while (!disconnectingElements.isEmpty()) {
+            // find field disconnecting most subGraphs
+            Map.Entry<Field, Set<Integer>> fieldEntry = disconnectingElements.entrySet().stream().max(Comparator.comparingInt(o -> o.getValue().size())).orElse(null);
+            // set its state to empty
+            fieldEntry.getKey().setState(FieldState.EMPTY);
+            // remove all elements disconnecting same subGraphs as fieldEntry from map
+            disconnectingElements.entrySet().stream()
+                    .filter(entry -> entry.getValue().equals(fieldEntry.getValue()))
+                    .map(Map.Entry::getKey)
+                    .collect(Collectors.toSet())
+                    .forEach(disconnectingElements::remove);
+        }
+    }
+
     void generateObstructions(int obstructionsCount) {
         for (int i = 0; i < obstructionsCount; i++) {
             getRandomUnoccupiedField().ifPresent(field -> field.setState(FieldState.BLOCKED));
         }
+        removeDisconnectingObstructions(getDisconnectingFields());
     }
 }

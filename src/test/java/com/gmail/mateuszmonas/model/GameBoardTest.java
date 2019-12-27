@@ -1,5 +1,6 @@
 package com.gmail.mateuszmonas.model;
 
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -9,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameBoardTest {
 
     @Test
-    void reset() {
+    void testReset() {
         int width = 10;
         int height = 10;
         int obstructionsCount = 3;
@@ -28,9 +29,9 @@ class GameBoardTest {
     }
 
     @Test
-    void isConnected() {
-        int width = 10;
-        int height = 10;
+    void testIsConnected() {
+        int width = 100;
+        int height = 100;
         int obstructionsCount = 0;
         GameBoard gameBoard = new GameBoard(width, height, obstructionsCount);
         assertEquals(0, gameBoard.getDisconnectingFields().size());
@@ -39,4 +40,15 @@ class GameBoardTest {
         gameBoard.getFieldAt(0, 1).setState(FieldState.BLOCKED);
         assertEquals(2, gameBoard.getDisconnectingFields().size());
     }
+
+    @RepeatedTest(100)
+    void testRemoveDisconnectingObstructions() {
+        int width = 100;
+        int height = 100;
+        int obstructionsCount = 5000;
+        GameBoard gameBoard = new GameBoard(width, height, obstructionsCount);
+        gameBoard.removeDisconnectingObstructions(gameBoard.getDisconnectingFields());
+        assertEquals(0, gameBoard.getDisconnectingFields().size());
+    }
+
 }
