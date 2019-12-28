@@ -1,6 +1,9 @@
 package com.gmail.mateuszmonas.model;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class ObstructionsGenerator {
@@ -52,7 +55,7 @@ public class ObstructionsGenerator {
             }
         }
         return disconnectingElements.entrySet().stream()
-                .filter(entry -> 1<entry.getValue().size())
+                .filter(e -> e.getValue().size()>1)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
@@ -63,7 +66,7 @@ public class ObstructionsGenerator {
         while (!disconnectingElements.isEmpty()) {
             while (!disconnectingElements.isEmpty()) {
                 // find field disconnecting most subGraphs
-                Map.Entry<Field, Set<Integer>> fieldEntry = disconnectingElements.entrySet().stream().max(Comparator.comparingInt(o -> o.getValue().size())).orElse(null);
+                Map.Entry<Field, Set<Integer>> fieldEntry = disconnectingElements.entrySet().stream().findAny().orElse(null);
                 // set its state to empty
                 fieldEntry.getKey().setState(FieldState.EMPTY);
                 // remove all elements disconnecting same subGraphs as fieldEntry from map
@@ -79,11 +82,66 @@ public class ObstructionsGenerator {
         return removedObstructionsCount;
     }
 
+    // do dfs on board and remove fields reached last so not to disconnect the graph
+    static void generatePseudoRandomObstructions(int obstructionsToReAdd, Field[][] board) throws NoSuchElementException {
+        boolean[][] visited = new boolean[board.length][board[0].length];
+
+        Field field = null;
+        for (Field[] fields : board) {
+            for (Field field1 : fields) {
+                if (field1.isEmpty()) {
+                    field = field1;
+                    break;
+                }
+            }
+            if (field != null) {
+                break;
+            }
+        }
+        if(field == null) return;
+
+        LinkedList<Field> removalOrder = new LinkedList<>();
+        Deque<Field> stack = new ArrayDeque<>();
+        visited[field.x][field.y] = true;
+        stack.add(field);
+        while (!stack.isEmpty()) {
+            Field currentField = stack.pop();
+            removalOrder.addFirst(currentField);
+            for (Field field1 : currentField.getAdjacent()) {
+                if (!visited[field1.x][field1.y] && !field1.isBlocked()) {
+                    visited[field1.x][field1.y] = true;
+                    stack.add(field1);
+                }
+            }
+        }
+        if (removalOrder.size() < obstructionsToReAdd) {
+            for (Field[] fields : board) {
+                for (Field field1 : fields) {
+                    field1.setState(FieldState.EMPTY);
+                }
+            }
+        }
+        for (int i = 0; i < obstructionsToReAdd; i++) {
+            removalOrder.removeFirst().setState(FieldState.BLOCKED);
+        }
+    }
+
+    // FIXME: 2019-12-28 obstructions generation doesn't work when we generate a subGraph separated by two layers of blocked fields
     static void generateObstructions(int obstructionsCount, GameBoard gameBoard) {
         for (int i = 0; i < obstructionsCount; i++) {
             gameBoard.getRandomUnoccupiedField().ifPresent(field -> field.setState(FieldState.BLOCKED));
         }
-        int removedObstructions = removeDisconnectingObstructions(gameBoard.getBoard());
+        int removedObstructionsCount = removeDisconnectingObstructions(gameBoard.getBoard());
+        // we try to generate new obstructions
+        try {
+            generatePseudoRandomObstructions(removedObstructionsCount, gameBoard.getBoard());
+        } catch (NoSuchElementException e) {
+            for (Field[] fields : gameBoard.getBoard()) {
+                for (Field field : fields) {
+                    field.setState(FieldState.EMPTY);
+                }
+            }
+            generateObstructions(obstructionsCount, gameBoard);
+        }
     }
-
 }
