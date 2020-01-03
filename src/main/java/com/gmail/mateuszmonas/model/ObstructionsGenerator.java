@@ -126,22 +126,11 @@ public class ObstructionsGenerator {
         }
     }
 
-    // FIXME: 2019-12-28 obstructions generation doesn't work when we generate a subGraph separated by two layers of blocked fields
+    // FIXME: 2019-12-28 obstructions generation doesn't work when we generate a subGraph separated by two or more layers of blocked fields
     static void generateObstructions(int obstructionsCount, GameBoard gameBoard) {
         for (int i = 0; i < obstructionsCount; i++) {
             gameBoard.getRandomUnoccupiedField().ifPresent(field -> field.setState(FieldState.BLOCKED));
         }
         int removedObstructionsCount = removeDisconnectingObstructions(gameBoard.getBoard());
-        // we try to generate new obstructions
-        try {
-            generatePseudoRandomObstructions(removedObstructionsCount, gameBoard.getBoard());
-        } catch (NoSuchElementException e) {
-            for (Field[] fields : gameBoard.getBoard()) {
-                for (Field field : fields) {
-                    field.setState(FieldState.EMPTY);
-                }
-            }
-            generateObstructions(obstructionsCount, gameBoard);
-        }
     }
 }
