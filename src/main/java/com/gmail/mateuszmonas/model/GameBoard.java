@@ -1,5 +1,7 @@
 package com.gmail.mateuszmonas.model;
 
+import com.gmail.mateuszmonas.util.GeneralUtil;
+
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
@@ -30,7 +32,7 @@ public class GameBoard implements FieldObserver {
                 }
             }
         }
-        ObstructionsGenerator.generateObstructions(obstructionsCount, this);
+        new ObstructionsGenerator(board).generateObstructions(obstructionsCount);
     }
 
     void reset() {
@@ -67,16 +69,6 @@ public class GameBoard implements FieldObserver {
     }
 
     Optional<Field> getRandomUnoccupiedField() {
-        int r = ThreadLocalRandom.current().nextInt(1, unoccupiedFields.size() + 1) - 1;
-        int i = 0;
-        Field field = null;
-        for (Field unoccupiedField : unoccupiedFields) {
-            if (i == r) {
-                field = unoccupiedField;
-                break;
-            }
-            i++;
-        }
-        return Optional.ofNullable(field);
+        return GeneralUtil.getRandomSetElement(unoccupiedFields);
     }
 }
