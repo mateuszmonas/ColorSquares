@@ -67,7 +67,7 @@ public class GameBoard implements FieldObserver {
     }
 
     Optional<Field> getRandomUnoccupiedField() {
-        int r = ThreadLocalRandom.current().nextInt(unoccupiedFields.size());
+        int r = ThreadLocalRandom.current().nextInt(1, unoccupiedFields.size() + 1) - 1;
         int i = 0;
         Field field = null;
         for (Field unoccupiedField : unoccupiedFields) {
