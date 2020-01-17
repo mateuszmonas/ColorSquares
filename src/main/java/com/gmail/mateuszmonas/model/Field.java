@@ -4,11 +4,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import static com.gmail.mateuszmonas.model.GameBoard.UNVISITED;
-
 public class Field {
     int x, y;
-    private FieldState state = FieldState.EMPTY;
+    private FieldStatus state = FieldStatus.EMPTY;
     private Player owner;
     private Set<Field> adjacent = new HashSet<>();
     private FieldObserver observer;
@@ -20,13 +18,13 @@ public class Field {
 
     public void setOwner(Player owner) {
         this.owner = owner;
-        setState(FieldState.OCCUPIED);
+        setState(FieldStatus.OCCUPIED);
     }
 
-    public void setState(FieldState state) {
-        if (state == FieldState.OCCUPIED && owner==null)
+    public void setState(FieldStatus state) {
+        if (state == FieldStatus.OCCUPIED && owner==null)
             throw new IllegalArgumentException("can't set state to occupied without owner");
-        if (state != FieldState.OCCUPIED) {
+        if (state != FieldStatus.OCCUPIED) {
             owner = null;
         }
         this.state = state;
@@ -47,7 +45,7 @@ public class Field {
     }
 
     public int getOwnerId() {
-        if (state != FieldState.OCCUPIED) throw new IllegalStateException("field is not occupied");
+        if (state != FieldStatus.OCCUPIED) throw new IllegalStateException("field is not occupied");
         return owner.getId();
     }
 
@@ -61,11 +59,11 @@ public class Field {
     }
 
     public boolean isBlocked() {
-        return state == FieldState.BLOCKED;
+        return state == FieldStatus.BLOCKED;
     }
 
     public boolean isEmpty() {
-        return state == FieldState.EMPTY;
+        return state == FieldStatus.EMPTY;
     }
 
     @Override

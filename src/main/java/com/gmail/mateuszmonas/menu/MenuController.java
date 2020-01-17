@@ -31,13 +31,21 @@ public class MenuController implements MenuContract.Controller {
 
     @Override
     public void changeSettings(GameSettings gameSettings) {
+        if(gameSettings.getBotCount()>18){
+            view.showInvalidSettingsDialog("maximum bot count is 18");
+            return;
+        }
+        if(gameSettings.getHeight()*gameSettings.getWidth()-1<gameSettings.getObstructionsCount()+gameSettings.getBotCount()){
+            view.showInvalidSettingsDialog("bot and obstacle count can't be larger than map size");
+            return;
+        }
         SettingsUtil.saveGameSettings(gameSettings);
         this.gameSettings = gameSettings;
-        view.setSettings(gameSettings);
     }
 
     @Override
     public void settingsButtonClicked() {
+        view.setSettings(gameSettings);
         view.showSettingsDialog();
     }
 

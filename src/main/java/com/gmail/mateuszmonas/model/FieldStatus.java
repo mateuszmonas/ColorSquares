@@ -1,5 +1,5 @@
 package com.gmail.mateuszmonas.model;
 
-public enum FieldState {
+public enum FieldStatus {
     EMPTY, BLOCKED, OCCUPIED
 }

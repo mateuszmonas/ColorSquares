@@ -24,6 +24,8 @@ public interface MenuContract {
 
         void showSettingsDialog();
 
+        void showInvalidSettingsDialog(String errorMessage);
+
     }
 
 }

@@ -15,7 +15,7 @@ public class Game {
             Runnable runnable = gameState::update;
             while (running) {
                 try {
-                    Thread.sleep(10000 / Math.max(gameSettings.getWidth(), gameSettings.getHeight()));
+                    Thread.sleep(10000 / (Math.max(gameSettings.getWidth(), gameSettings.getHeight())*2));
                 } catch (InterruptedException ignore) {
                 }
                 if (!paused) {

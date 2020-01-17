@@ -3,8 +3,6 @@ package com.gmail.mateuszmonas.model;
 import com.gmail.mateuszmonas.util.GeneralUtil;
 
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 
 public class GameBoard implements FieldObserver {
 
@@ -39,7 +37,7 @@ public class GameBoard implements FieldObserver {
         for (Field[] fields : board) {
             for (Field field : fields) {
                 if (!field.isBlocked()) {
-                    field.setState(FieldState.EMPTY);
+                    field.setState(FieldStatus.EMPTY);
                     unoccupiedFields.add(field);
                 }
             }

@@ -1,7 +1,6 @@
 package com.gmail.mateuszmonas.model;
 
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 // TODO: 2019-12-25 improve obstructions generation
@@ -37,7 +36,7 @@ public class GameState {
 
     void setStartingField(Player player, Field field) {
         if (player.getStartingField() != null && player.getStartingField() != field) {
-            player.getStartingField().setState(FieldState.EMPTY);
+            player.getStartingField().setState(FieldStatus.EMPTY);
         }
         player.setStartingField(field);
     }

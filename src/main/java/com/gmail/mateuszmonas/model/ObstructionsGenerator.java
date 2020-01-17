@@ -3,7 +3,6 @@ package com.gmail.mateuszmonas.model;
 import com.gmail.mateuszmonas.util.GeneralUtil;
 
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public class ObstructionsGenerator {
@@ -31,7 +30,7 @@ public class ObstructionsGenerator {
                 Field field = o.get();
                 validFields.remove(field);
                 if (!checkIfValid(field)) continue;
-                field.setState(FieldState.BLOCKED);
+                field.setState(FieldStatus.BLOCKED);
                 mergeCorners(field);
                 addNeighboursToValidFields(field);
                 obstructionsCreated++;
