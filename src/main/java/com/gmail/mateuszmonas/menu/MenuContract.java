@@ -3,7 +3,7 @@ package com.gmail.mateuszmonas.menu;
 
 import com.gmail.mateuszmonas.BaseController;
 import com.gmail.mateuszmonas.BaseView;
-import com.gmail.mateuszmonas.model.GameSettings;
+import com.gmail.mateuszmonas.model.game.GameSettings;
 
 public interface MenuContract {
 

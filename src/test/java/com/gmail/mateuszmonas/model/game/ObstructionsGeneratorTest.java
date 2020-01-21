@@ -1,6 +1,8 @@
-package com.gmail.mateuszmonas.model;
+package com.gmail.mateuszmonas.model.game;
 
-import org.junit.jupiter.api.RepeatedTest;
+import com.gmail.mateuszmonas.model.field.Field;
+import com.gmail.mateuszmonas.model.game.GameBoard;
+import com.gmail.mateuszmonas.model.game.ObstructionsGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayDeque;

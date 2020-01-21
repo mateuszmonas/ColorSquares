@@ -1,7 +1,7 @@
 package com.gmail.mateuszmonas.menu.view;
 
 import com.gmail.mateuszmonas.menu.MenuContract;
-import com.gmail.mateuszmonas.model.GameSettings;
+import com.gmail.mateuszmonas.model.game.GameSettings;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;

@@ -1,5 +1,8 @@
-package com.gmail.mateuszmonas.model;
+package com.gmail.mateuszmonas.model.game;
 
+import com.gmail.mateuszmonas.model.field.Field;
+import com.gmail.mateuszmonas.model.field.FieldObserver;
+import com.gmail.mateuszmonas.model.field.FieldStatus;
 import com.gmail.mateuszmonas.util.GeneralUtil;
 
 import java.util.*;

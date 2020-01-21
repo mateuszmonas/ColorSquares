@@ -1,5 +1,7 @@
 package com.gmail.mateuszmonas.model;
 
+import com.gmail.mateuszmonas.model.field.Field;
+
 import java.util.HashSet;
 import java.util.Set;
 

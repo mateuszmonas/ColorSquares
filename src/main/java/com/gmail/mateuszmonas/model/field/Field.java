@@ -1,11 +1,13 @@
-package com.gmail.mateuszmonas.model;
+package com.gmail.mateuszmonas.model.field;
+
+import com.gmail.mateuszmonas.model.Player;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 public class Field {
-    int x, y;
+    public int x, y;
     private FieldStatus state = FieldStatus.EMPTY;
     private Player owner;
     private Set<Field> adjacent = new HashSet<>();

@@ -2,9 +2,9 @@ package com.gmail.mateuszmonas.game;
 
 import com.gmail.mateuszmonas.menu.MenuController;
 import com.gmail.mateuszmonas.menu.view.MenuPane;
-import com.gmail.mateuszmonas.model.Field;
-import com.gmail.mateuszmonas.model.Game;
-import com.gmail.mateuszmonas.model.GameObserver;
+import com.gmail.mateuszmonas.model.field.Field;
+import com.gmail.mateuszmonas.model.game.GameEngine;
+import com.gmail.mateuszmonas.model.game.GameObserver;
 import com.gmail.mateuszmonas.model.Player;
 import com.gmail.mateuszmonas.util.GuiUtil;
 
@@ -13,18 +13,18 @@ import java.util.Set;
 public class GameController implements GameContract.Controller, GameObserver {
 
     GameContract.View view;
-    Game game;
+    GameEngine gameEngine;
 
-    public GameController(GameContract.View view, Game game) {
+    public GameController(GameContract.View view, GameEngine gameEngine) {
         this.view = view;
-        this.game = game;
+        this.gameEngine = gameEngine;
         view.setController(this);
-        game.setObserver(this);
+        gameEngine.setObserver(this);
     }
 
     @Override
     public void choosePosition(int x, int y) {
-        game.selectStartingPosition(x, y);
+        gameEngine.selectStartingPosition(x, y);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class GameController implements GameContract.Controller, GameObserver {
 
     @Override
     public void startGame() {
-        game.start();
+        gameEngine.start();
         view.showPauseButton();
     }
 
@@ -45,7 +45,7 @@ public class GameController implements GameContract.Controller, GameObserver {
 
     @Override
     public void exitGame() {
-        game.stop();
+        gameEngine.stop();
         new MenuController(new MenuPane(GuiUtil.getWidth(), GuiUtil.getHeight())).start();
     }
 
@@ -56,20 +56,20 @@ public class GameController implements GameContract.Controller, GameObserver {
 
     @Override
     public void gameFinished(Set<Player> players) {
-        game.pause();
+        gameEngine.pause();
         view.showRestartButton();
         view.showGameFinishedDialog(players);
     }
 
     @Override
     public void pauseGame() {
-        game.pause();
+        gameEngine.pause();
         view.showStartButton();
     }
 
     @Override
     public void restartGame() {
-        game.restartGame();
+        gameEngine.restartGame();
         view.showStartButton();
     }
 

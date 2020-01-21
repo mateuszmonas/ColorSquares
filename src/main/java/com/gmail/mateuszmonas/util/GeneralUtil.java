@@ -1,7 +1,5 @@
 package com.gmail.mateuszmonas.util;
 
-import com.gmail.mateuszmonas.model.Field;
-
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;

@@ -1,4 +1,4 @@
-package com.gmail.mateuszmonas.model;
+package com.gmail.mateuszmonas.model.field;
 
 public interface FieldObserver {
 

@@ -1,7 +1,7 @@
 package com.gmail.mateuszmonas.game.view;
 
 import com.gmail.mateuszmonas.game.GameContract;
-import com.gmail.mateuszmonas.model.Field;
+import com.gmail.mateuszmonas.model.field.Field;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 

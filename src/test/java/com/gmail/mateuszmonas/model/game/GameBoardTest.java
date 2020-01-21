@@ -1,5 +1,8 @@
-package com.gmail.mateuszmonas.model;
+package com.gmail.mateuszmonas.model.game;
 
+import com.gmail.mateuszmonas.model.Player;
+import com.gmail.mateuszmonas.model.field.Field;
+import com.gmail.mateuszmonas.model.game.GameBoard;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

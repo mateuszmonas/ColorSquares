@@ -1,6 +1,6 @@
 package com.gmail.mateuszmonas.util;
 
-import com.gmail.mateuszmonas.model.GameSettings;
+import com.gmail.mateuszmonas.model.game.GameSettings;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

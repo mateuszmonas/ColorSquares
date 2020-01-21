@@ -1,11 +1,10 @@
 package com.gmail.mateuszmonas.game.view;
 
 import com.gmail.mateuszmonas.game.GameContract;
-import com.gmail.mateuszmonas.model.Field;
+import com.gmail.mateuszmonas.model.field.Field;
 import com.gmail.mateuszmonas.model.Player;
 import com.gmail.mateuszmonas.util.GuiUtil;
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.layout.*;

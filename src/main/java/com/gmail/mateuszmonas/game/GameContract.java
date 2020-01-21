@@ -2,7 +2,7 @@ package com.gmail.mateuszmonas.game;
 
 import com.gmail.mateuszmonas.BaseController;
 import com.gmail.mateuszmonas.BaseView;
-import com.gmail.mateuszmonas.model.Field;
+import com.gmail.mateuszmonas.model.field.Field;
 import com.gmail.mateuszmonas.model.Player;
 
 import java.util.Set;

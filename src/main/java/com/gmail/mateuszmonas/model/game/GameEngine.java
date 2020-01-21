@@ -1,15 +1,15 @@
-package com.gmail.mateuszmonas.model;
+package com.gmail.mateuszmonas.model.game;
 
 import javafx.application.Platform;
 
-public class Game {
+public class GameEngine {
 
     GameState gameState;
     private boolean running = true;
     private boolean paused = true;
     private Thread gameThread;
 
-    public Game(GameSettings gameSettings) {
+    public GameEngine(GameSettings gameSettings) {
         gameState = new GameState(gameSettings);
         gameThread = new Thread(() -> {
             Runnable runnable = gameState::update;

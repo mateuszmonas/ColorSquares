@@ -1,6 +1,6 @@
 package com.gmail.mateuszmonas.game.view;
 
-import com.gmail.mateuszmonas.model.Field;
+import com.gmail.mateuszmonas.model.field.Field;
 import com.gmail.mateuszmonas.util.GuiUtil;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Background;

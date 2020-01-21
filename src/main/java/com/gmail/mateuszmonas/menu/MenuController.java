@@ -2,8 +2,8 @@ package com.gmail.mateuszmonas.menu;
 
 import com.gmail.mateuszmonas.game.GameController;
 import com.gmail.mateuszmonas.game.view.GamePane;
-import com.gmail.mateuszmonas.model.Game;
-import com.gmail.mateuszmonas.model.GameSettings;
+import com.gmail.mateuszmonas.model.game.GameEngine;
+import com.gmail.mateuszmonas.model.game.GameSettings;
 import com.gmail.mateuszmonas.util.GuiUtil;
 import com.gmail.mateuszmonas.util.SettingsUtil;
 
@@ -26,7 +26,7 @@ public class MenuController implements MenuContract.Controller {
 
     @Override
     public void startGame() {
-        new GameController(new GamePane(GuiUtil.getWidth(), GuiUtil.getHeight()), new Game(gameSettings)).start();
+        new GameController(new GamePane(GuiUtil.getWidth(), GuiUtil.getHeight()), new GameEngine(gameSettings)).start();
     }
 
     @Override

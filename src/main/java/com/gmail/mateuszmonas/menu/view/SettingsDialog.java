@@ -1,6 +1,6 @@
 package com.gmail.mateuszmonas.menu.view;
 
-import com.gmail.mateuszmonas.model.GameSettings;
+import com.gmail.mateuszmonas.model.game.GameSettings;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;

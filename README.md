@@ -1,2 +1,2 @@
 # ColorSquares
-color squares game made as a project for OOP class
+color squares gameEngine made as a project for OOP class

@@ -1,4 +1,7 @@
-package com.gmail.mateuszmonas.model;
+package com.gmail.mateuszmonas.model.game;
+
+import com.gmail.mateuszmonas.model.Player;
+import com.gmail.mateuszmonas.model.field.Field;
 
 import java.util.Set;
 
