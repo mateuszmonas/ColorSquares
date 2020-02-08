@@ -14,8 +14,6 @@ public class BoardPane extends GridPane {
         setPrefWidth(prefWidth);
         setPrefHeight(prefHeight);
         setAlignment(Pos.CENTER);
-        setVgap(1);
-        setHgap(1);
     }
 
     public void initialize(int boardWidth, int boardHeight) {
