@@ -32,8 +32,3 @@ wraz z ustawionymi przeszkodami w formacie `*.json` lub innym preferowanym
 ### Możliwe modyfikacje gry (opcjonalne)
 * w każdej fazie gry można zaimplementować, aby dla każdego zajętego wcześniej pola przez gracz było losowane czy w danym
 kierunku świata zostanie zajęte kolejne pole - sprawi to, że gra będzie o wiele mniej przewidywalna i ciekawsza
-
-
-### Przykładowy gameplay
-
-![alt text](https://agh.mzlnk.pl/po/colorsquares/assets/pictures/example-gameplay.gif)
